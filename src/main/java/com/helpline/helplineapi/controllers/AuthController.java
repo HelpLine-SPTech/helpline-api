@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @GetMapping("/hello")
-    private String hello(@RequestParam(name = "name", defaultValue = "World") String name) {
+    private String hello(@RequestPara(name = "name", defaultValue = "World") String name) {
         return String.format("Hello %s", name);
     }
 }
