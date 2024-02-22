@@ -1,9 +1,9 @@
-package com.helpline.helplineapi.entities;
+package com.helpline.helplineapi.entities.user;
 
+import com.helpline.helplineapi.entities.BaseEntity;
 import com.helpline.helplineapi.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,24 +12,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
 @Entity(name = "users")
-@EqualsAndHashCode(of = "id")
-public class UserEntity implements UserDetails {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+public class UserEntity extends BaseEntity implements UserDetails {
 
     private String email;
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @Override
