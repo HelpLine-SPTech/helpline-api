@@ -1,8 +1,12 @@
 package com.helpline.helplineapi.controllers;
 
 import com.helpline.helplineapi.data.contract.auth.login.LoginRequest;
+import com.helpline.helplineapi.data.contract.auth.login.LoginResponse;
 import com.helpline.helplineapi.data.contract.auth.register.RegisterRequest;
 import com.helpline.helplineapi.data.contract.auth.register.RegisterResponse;
+import com.helpline.helplineapi.entities.user.UserEntity;
+import com.helpline.helplineapi.infra.security.TokenService;
+import com.helpline.helplineapi.services.user.AuthService;
 import com.helpline.helplineapi.services.user.RegisterUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +23,23 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
+    TokenService tokenService;
+
+    @Autowired
     RegisterUserService registerUserService;
+
+    @Autowired
+    AuthService authService;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Validated LoginRequest body) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(body.email(), body.password());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
 
         var auth = authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok().build();
+        var token = tokenService.generateToken((UserEntity) auth.getPrincipal());
+
+        return ResponseEntity.ok(new LoginResponse(token));
     }
 
     @PostMapping("/register")

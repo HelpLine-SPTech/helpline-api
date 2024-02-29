@@ -3,6 +3,7 @@ package com.helpline.helplineapi.services.user;
 import com.helpline.helplineapi.data.contract.auth.register.RegisterRequest;
 import com.helpline.helplineapi.data.contract.auth.register.RegisterResponse;
 import com.helpline.helplineapi.entities.user.UserEntity;
+import com.helpline.helplineapi.enums.ErrorCodeEnum;
 import com.helpline.helplineapi.repositories.UserRepository;
 import com.helpline.helplineapi.services.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
