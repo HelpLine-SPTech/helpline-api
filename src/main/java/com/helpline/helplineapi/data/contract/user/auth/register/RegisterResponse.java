@@ -1,6 +1,6 @@
-package com.helpline.helplineapi.data.contract.auth.register;
+package com.helpline.helplineapi.data.contract.user.auth.register;
 
-import com.helpline.helplineapi.data.contract.auth.BaseResponse;
+import com.helpline.helplineapi.data.contract.BaseResponse;
 import com.helpline.helplineapi.entities.user.UserEntity;
 import lombok.Getter;
 import lombok.Setter;

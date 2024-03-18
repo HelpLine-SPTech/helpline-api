@@ -1,4 +1,4 @@
-package com.helpline.helplineapi.data.contract.auth.login;
+package com.helpline.helplineapi.data.contract.user.auth.login;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

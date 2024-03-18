@@ -1,6 +1,6 @@
-package com.helpline.helplineapi.data.contract.auth.login;
+package com.helpline.helplineapi.data.contract.user.auth.login;
 
-import com.helpline.helplineapi.data.contract.auth.BaseResponse;
+import com.helpline.helplineapi.data.contract.BaseResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

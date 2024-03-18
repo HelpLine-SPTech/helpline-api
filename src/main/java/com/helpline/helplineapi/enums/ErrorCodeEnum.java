@@ -8,11 +8,13 @@ public enum ErrorCodeEnum {
 
     USER_ALREADY_EXISTS_ERROR(1),
 
-    NOT_FOUND_ERROR(2);
+    NOT_FOUND_ERROR(2),
 
-    public int number;
+    UNEXPECTED_ERROR(3);
 
-    @Value("")
+    public final int number;
+
+
     public String message;
 
     ErrorCodeEnum(int number) {
