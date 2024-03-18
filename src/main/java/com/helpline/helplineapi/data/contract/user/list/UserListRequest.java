@@ -11,4 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserListRequest {
     private UserTypeEnum type;
+
+    private int sortStrategy;
+
+    private int order;
 }
