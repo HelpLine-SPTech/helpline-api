@@ -56,9 +56,15 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<UserListResponse> list(@RequestParam int type) {
+    public ResponseEntity<UserListResponse> list(
+            @RequestParam int type,
+            @RequestParam(defaultValue = "1") int algorithm,
+            @RequestParam(defaultValue = "1") int order) {
+
         var request = new UserListRequest(
-                UserTypeEnum.fromInteger(type)
+                UserTypeEnum.fromInteger(type),
+                algorithm,
+                order
         );
 
         return listUserService.process(request);

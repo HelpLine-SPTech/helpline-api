@@ -31,6 +31,8 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     private String password;
 
+    private String name;
+
     private String document;
 
     /**

@@ -10,7 +10,9 @@ public enum ErrorCodeEnum {
 
     NOT_FOUND_ERROR(2),
 
-    UNEXPECTED_ERROR(3);
+    UNEXPECTED_ERROR(3),
+
+    INVALID_PROPERTY(4);
 
     public final int number;
 

@@ -25,7 +25,7 @@ public class RegisterUserService extends BaseService<RegisterRequest, RegisterRe
 
         var password = passwordEncoder.encode(request.password());
 
-        var user = new UserEntity(request.email(), password, request.document(), request.type(), request.role());
+        var user = new UserEntity(request.email(), password, request.name(), request.document(), request.type(), request.role());
 
         response.setSavedUser(repository.save(user));
 
