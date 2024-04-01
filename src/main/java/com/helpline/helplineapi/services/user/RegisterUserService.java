@@ -23,9 +23,9 @@ public class RegisterUserService extends BaseService<RegisterRequest, RegisterRe
     protected RegisterResponse processService(RegisterRequest request) {
         var response = new RegisterResponse();
 
-        var password = passwordEncoder.encode(request.password());
+        var password = passwordEncoder.encode(request.getPassword());
 
-        var user = new UserEntity(request.email(), password, request.name(), request.document(), request.type(), request.role());
+        var user = new UserEntity(request.getEmail(), password, request.getName(), request.getDocument(), request.getType(), request.getRole());
 
         response.setSavedUser(repository.save(user));
 
@@ -36,7 +36,7 @@ public class RegisterUserService extends BaseService<RegisterRequest, RegisterRe
     protected RegisterResponse validateService(RegisterRequest request) {
         var response = new RegisterResponse();
 
-        if(repository.findByEmail(request.email()) != null) {
+        if(repository.findByEmail(request.getEmail()) != null) {
             response.addError(ErrorCodeEnum.USER_ALREADY_EXISTS_ERROR);
             return response;
         }

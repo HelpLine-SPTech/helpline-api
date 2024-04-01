@@ -2,6 +2,24 @@ package com.helpline.helplineapi.data.contract.user.auth.register;
 
 import com.helpline.helplineapi.enums.UserRole;
 import com.helpline.helplineapi.enums.UserTypeEnum;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public record RegisterRequest(String email, String password, String name, String document, UserTypeEnum type, UserRole role) {
+@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class RegisterRequest {
+    private String email;
+
+    private String password;
+
+    private String name;
+
+    private String document;
+
+    private UserTypeEnum type;
+
+    private UserRole role;
 }
