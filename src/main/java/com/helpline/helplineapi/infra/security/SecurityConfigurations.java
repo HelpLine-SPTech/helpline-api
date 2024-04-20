@@ -33,6 +33,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/report").permitAll()
                         .requestMatchers(HttpMethod.POST, "/nome").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

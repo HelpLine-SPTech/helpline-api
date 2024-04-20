@@ -13,11 +13,17 @@ import com.helpline.helplineapi.services.user.AuthService;
 import com.helpline.helplineapi.services.user.ListUserService;
 import com.helpline.helplineapi.services.user.RegisterUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.StringJoiner;
 
 @RestController()
 @RequestMapping("auth")
@@ -40,7 +46,7 @@ public class UserController {
     ListUserService listUserService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Validated LoginRequest body) {
+    public ResponseEntity<LoginResponse> login(@RequestBody @Validated LoginRequest body) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
 
         var auth = authenticationManager.authenticate(usernamePassword);
@@ -68,5 +74,51 @@ public class UserController {
         );
 
         return listUserService.process(request);
+    }
+
+    @GetMapping("/report")
+    public ResponseEntity<FileSystemResource> report() throws IOException {
+        var sb = new StringBuilder();
+
+        String[] headers = {"Nome", "Tamanho"};
+
+        String[][] data = {{"Renan", "999cm"}, {"Leo", "2cm (micro penis)"}};
+
+        var sj1 = new StringJoiner(";");
+        for (String header : headers) {
+            sj1.add(header);
+        }
+
+        sb.append(sj1 + "\n");
+
+        for(String[] d : data) {
+            var sj2 = new StringJoiner(";");
+            for (String s : d) {
+                sj2.add(s);
+            }
+            sb.append(sj2 + "\n");
+        }
+
+        FileWriter file = new FileWriter("report.csv");
+        file.write(sb.toString());
+        file.close();
+        var fileResource = new FileSystemResource("report.csv");
+
+        MediaType mediaType = MediaTypeFactory
+                .getMediaType(fileResource)
+                .orElse(MediaType.APPLICATION_OCTET_STREAM);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(mediaType);
+        // 3
+        ContentDisposition disposition = ContentDisposition
+                // 3.2
+                .attachment() // or .attachment()
+                // 3.1
+                .filename(fileResource.getFilename())
+                .build();
+        httpHeaders.setContentDisposition(disposition);
+
+        return new ResponseEntity<FileSystemResource>(fileResource, httpHeaders, HttpStatus.OK);
+
     }
 }
