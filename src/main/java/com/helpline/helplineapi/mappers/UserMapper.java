@@ -1,13 +1,13 @@
 package com.helpline.helplineapi.mappers;
 
-import com.helpline.helplineapi.data.contract.user.list.ListUserResult;
+import com.helpline.helplineapi.data.contract.user.UserResult;
 import com.helpline.helplineapi.entities.user.UserEntity;
 
 import java.util.List;
 
 public class UserMapper {
-    public static ListUserResult toListUserResult(UserEntity self) {
-        return new ListUserResult(
+    public static UserResult toUserResult(UserEntity self) {
+        return new UserResult(
                 self.getId(),
                 self.getName(),
                 self.getEmail(),
@@ -15,7 +15,7 @@ public class UserMapper {
         );
     }
 
-    public static List<ListUserResult> toListUserResult(List<UserEntity> self) {
-        return self.stream().map(UserMapper::toListUserResult).toList();
+    public static List<UserResult> toUserResult(List<UserEntity> self) {
+        return self.stream().map(UserMapper::toUserResult).toList();
     }
 }

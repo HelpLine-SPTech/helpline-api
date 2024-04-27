@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ListUserService extends BaseService<UserListRequest, UserListResponse> {
@@ -33,7 +32,7 @@ public class ListUserService extends BaseService<UserListRequest, UserListRespon
         if(request.getOrder() == 1) sortStrategy.sort(users);
         else sortStrategy.sortDescending(users);
 
-        response.setUsers(UserMapper.toListUserResult(users));
+        response.setUsers(UserMapper.toUserResult(users));
 
         return response;
     }

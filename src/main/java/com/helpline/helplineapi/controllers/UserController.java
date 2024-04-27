@@ -9,6 +9,7 @@ import com.helpline.helplineapi.data.contract.user.list.UserListResponse;
 import com.helpline.helplineapi.entities.user.UserEntity;
 import com.helpline.helplineapi.enums.UserTypeEnum;
 import com.helpline.helplineapi.infra.security.TokenService;
+import com.helpline.helplineapi.mappers.UserMapper;
 import com.helpline.helplineapi.services.user.AuthService;
 import com.helpline.helplineapi.services.user.ListUserService;
 import com.helpline.helplineapi.services.user.RegisterUserService;
@@ -20,7 +21,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.StringJoiner;
@@ -47,13 +47,19 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Validated LoginRequest body) {
+        var response = new LoginResponse();
+
         var usernamePassword = new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
 
         var auth = authenticationManager.authenticate(usernamePassword);
+        var user = (UserEntity) auth.getPrincipal();
 
-        var token = tokenService.generateToken((UserEntity) auth.getPrincipal());
 
-        return ResponseEntity.ok(new LoginResponse(token));
+        var token = tokenService.generateToken(user);
+        response.setUser(UserMapper.toUserResult(user));
+        response.setToken(token);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")
