@@ -10,7 +10,7 @@ import java.util.UUID;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResult {
+public class UserContract {
     private UUID id;
 
     private String name;

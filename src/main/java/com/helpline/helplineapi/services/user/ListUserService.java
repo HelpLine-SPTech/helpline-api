@@ -2,10 +2,10 @@ package com.helpline.helplineapi.services.user;
 
 import com.helpline.helplineapi.data.contract.user.list.UserListRequest;
 import com.helpline.helplineapi.data.contract.user.list.UserListResponse;
-import com.helpline.helplineapi.entities.user.UserEntity;
+import com.helpline.helplineapi.entities.user.BaseUserEntity;
 import com.helpline.helplineapi.enums.ErrorCodeEnum;
 import com.helpline.helplineapi.mappers.UserMapper;
-import com.helpline.helplineapi.repositories.UserRepository;
+import com.helpline.helplineapi.repositories.BaseUserRepository;
 import com.helpline.helplineapi.services.BaseService;
 import com.helpline.helplineapi.strategy.BubbleSortStrategy;
 import com.helpline.helplineapi.strategy.ISortStrategy;
@@ -19,15 +19,15 @@ import java.util.ArrayList;
 @Service
 public class ListUserService extends BaseService<UserListRequest, UserListResponse> {
     @Autowired
-    private UserRepository repository;
+    private BaseUserRepository repository;
 
-    private ISortStrategy<UserEntity> sortStrategy = new QuickSortStrategy<UserEntity>();
+    private ISortStrategy<BaseUserEntity> sortStrategy = new QuickSortStrategy<BaseUserEntity>();
 
     @Override
     protected UserListResponse processService(UserListRequest request) {
         var response = new UserListResponse();
 
-        var users = new ArrayList<>(repository.findByType(request.getType()));
+        var users = new ArrayList<>(repository.findAll());
 
         if(request.getOrder() == 1) sortStrategy.sort(users);
         else sortStrategy.sortDescending(users);

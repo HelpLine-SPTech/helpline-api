@@ -2,6 +2,8 @@ package com.helpline.helplineapi.services;
 
 import com.helpline.helplineapi.data.contract.BaseResponse;
 import com.helpline.helplineapi.enums.ErrorCodeEnum;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.function.Consumer;
@@ -13,6 +15,10 @@ public abstract class BaseService<TRequest, TResponse extends BaseResponse> {
         var response = new BaseResponse();
         try {
             var validationResponse = this.validateService(request);
+
+            if(validationResponse.getErrors().stream().anyMatch(x -> x == ErrorCodeEnum.NOT_FOUND_ERROR)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(validationResponse);
+            }
 
             if(!validationResponse.getSuccess()) {
                 return ResponseEntity.badRequest().body(validationResponse);

@@ -1,6 +1,6 @@
 package com.helpline.helplineapi.services.user;
 
-import com.helpline.helplineapi.repositories.UserRepository;
+import com.helpline.helplineapi.repositories.BaseUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService implements UserDetailsService {
 
-    private UserRepository repository;
+    private BaseUserRepository repository;
 
     @Autowired
-    public AuthService(UserRepository repository) {
+    public AuthService(BaseUserRepository repository) {
         this.repository = repository;
     }
 
