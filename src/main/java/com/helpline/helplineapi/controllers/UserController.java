@@ -74,7 +74,7 @@ public class UserController {
 
         String[] headers = {"Nome", "Tamanho"};
 
-        String[][] data = {{"Renan", "999cm"}, {"Leo", "2cm (micro penis)"}};
+        String[][] data = {{"Renan", "tamanho teste 1"}, {"Leo", "tamanho teste 2"}};
 
         var sj1 = new StringJoiner(";");
         for (String header : headers) {
