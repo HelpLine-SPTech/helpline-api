@@ -7,4 +7,6 @@ import java.util.UUID;
 
 public interface JobRepository extends JpaRepository<JobEntity, UUID> {
     long countByOngId(UUID ongId);
+    void deleteById(UUID id);
+
 }
