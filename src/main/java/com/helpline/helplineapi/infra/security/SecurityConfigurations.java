@@ -36,6 +36,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/auth/report").permitAll()
                         .requestMatchers(HttpMethod.POST, "/nome").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/dashboard").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/jobs/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/h2-console").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
