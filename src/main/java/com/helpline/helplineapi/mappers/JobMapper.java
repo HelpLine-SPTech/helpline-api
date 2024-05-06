@@ -36,4 +36,14 @@ public abstract class JobMapper {
 
         return entity;
     }
+
+    public static JobEntity merge(JobContract self, JobEntity entity) {
+        entity.setDescription(self.getDescription());
+        entity.setAbilities(self.getAbilities());
+        entity.setAddress(AddressMapper.toEntity(self.getAddress()));
+        entity.setDate(self.getDate());
+        entity.setAmount(self.getAmount());
+
+        return entity;
+    }
 }
