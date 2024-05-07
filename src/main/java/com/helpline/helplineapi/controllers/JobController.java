@@ -1,38 +1,25 @@
 package com.helpline.helplineapi.controllers;
-<<<<<<< HEAD
-=======
 
->>>>>>> f6cf5185c8f57364806dc03efc73832cdb24d782
 import com.helpline.helplineapi.data.contract.job.*;
 import com.helpline.helplineapi.entities.user.BaseUserEntity;
 import com.helpline.helplineapi.services.job.CreateJobService;
-<<<<<<< HEAD
 import com.helpline.helplineapi.services.job.ListJobService;
-=======
 import com.helpline.helplineapi.services.job.UpdateJobService;
->>>>>>> f6cf5185c8f57364806dc03efc73832cdb24d782
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/jobs")
 public class JobController {
     private final CreateJobService createJobService;
-<<<<<<< HEAD
     private final ListJobService listJobService;
-
-    public JobController(CreateJobService createJobService, ListJobService listJobService) {
-        this.createJobService = createJobService;
-        this.listJobService = listJobService;
-=======
     private final UpdateJobService updateJobService;
 
-    public JobController(CreateJobService createJobService, UpdateJobService updateJobService) {
+    public JobController(CreateJobService createJobService, ListJobService listJobService, UpdateJobService updateJobService) {
         this.createJobService = createJobService;
+        this.listJobService = listJobService;
         this.updateJobService = updateJobService;
->>>>>>> f6cf5185c8f57364806dc03efc73832cdb24d782
     }
 
     @PostMapping
@@ -44,7 +31,6 @@ public class JobController {
         return createJobService.process(request);
     }
 
-<<<<<<< HEAD
     @GetMapping
     public ResponseEntity<ListJobResponse> listJobs(
             @RequestParam(defaultValue = "id") String sort,
@@ -61,7 +47,8 @@ public class JobController {
         request.setOngId(requesterUser.getId());
 
         return listJobService.process(request);
-=======
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<UpdateJobResponse> update(@RequestAttribute("RequesterUser") BaseUserEntity requesterUser, @PathVariable UUID id, @RequestBody JobContract job) {
         var request = new UpdateJobRequest();
@@ -70,6 +57,5 @@ public class JobController {
         request.setJobId(id);
 
         return updateJobService.process(request);
->>>>>>> f6cf5185c8f57364806dc03efc73832cdb24d782
     }
 }
