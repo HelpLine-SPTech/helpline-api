@@ -13,13 +13,13 @@ import java.util.UUID;
 @RequestMapping("/jobs")
 public class JobController {
     private final CreateJobService createJobService;
-    private final ListJobService listJobService;
     private final UpdateJobService updateJobService;
+    private final ListJobService listJobService;
 
-    public JobController(CreateJobService createJobService, ListJobService listJobService, UpdateJobService updateJobService) {
+    public JobController(CreateJobService createJobService, UpdateJobService updateJobService, ListJobService listJobService) {
         this.createJobService = createJobService;
-        this.listJobService = listJobService;
         this.updateJobService = updateJobService;
+        this.listJobService = listJobService;
     }
 
     @PostMapping
