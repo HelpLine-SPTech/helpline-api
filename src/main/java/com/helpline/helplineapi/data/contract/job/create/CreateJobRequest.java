@@ -1,5 +1,6 @@
-package com.helpline.helplineapi.data.contract.job;
+package com.helpline.helplineapi.data.contract.job.create;
 
+import com.helpline.helplineapi.data.contract.job.JobContract;
 import com.helpline.helplineapi.data.contract.user.UserContract;
 import com.helpline.helplineapi.entities.user.OngEntity;
 import lombok.Getter;

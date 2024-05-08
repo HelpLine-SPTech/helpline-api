@@ -1,10 +1,10 @@
 package com.helpline.helplineapi.services.job;
 
-import com.helpline.helplineapi.data.contract.job.*;
+import com.helpline.helplineapi.data.contract.job.create.CreateJobRequest;
+import com.helpline.helplineapi.data.contract.job.create.CreateJobResponse;
 import com.helpline.helplineapi.entities.user.OngEntity;
 import com.helpline.helplineapi.enums.ErrorCodeEnum;
 import com.helpline.helplineapi.mappers.JobMapper;
-import com.helpline.helplineapi.mappers.OngMapper;
 import com.helpline.helplineapi.repositories.AddressRepository;
 import com.helpline.helplineapi.repositories.JobRepository;
 import com.helpline.helplineapi.repositories.OngRepository;
@@ -32,7 +32,9 @@ public class CreateJobService extends BaseService<CreateJobRequest, CreateJobRes
         var entity = JobMapper.toEntity(request.getJob());
         entity.setOng(ong);
         addressRepository.save(entity.getAddress());
-        jobRepository.save(entity);
+        var savedJob = jobRepository.save(entity);
+
+        response.setJob(JobMapper.toDto(savedJob));
 
         return response;
     }

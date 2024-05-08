@@ -1,4 +1,4 @@
-package com.helpline.helplineapi.data.contract.job;
+package com.helpline.helplineapi.data.contract.job.delete;
 
 import lombok.Getter;
 import lombok.Setter;

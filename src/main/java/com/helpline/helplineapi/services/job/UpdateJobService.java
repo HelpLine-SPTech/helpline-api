@@ -1,7 +1,7 @@
 package com.helpline.helplineapi.services.job;
 
-import com.helpline.helplineapi.data.contract.job.UpdateJobRequest;
-import com.helpline.helplineapi.data.contract.job.UpdateJobResponse;
+import com.helpline.helplineapi.data.contract.job.update.UpdateJobRequest;
+import com.helpline.helplineapi.data.contract.job.update.UpdateJobResponse;
 import com.helpline.helplineapi.enums.ErrorCodeEnum;
 import com.helpline.helplineapi.mappers.JobMapper;
 import com.helpline.helplineapi.repositories.JobRepository;

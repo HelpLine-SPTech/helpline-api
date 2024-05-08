@@ -1,6 +1,8 @@
 package com.helpline.helplineapi.services.job;
 
 import com.helpline.helplineapi.data.contract.job.*;
+import com.helpline.helplineapi.data.contract.job.list.ListJobRequest;
+import com.helpline.helplineapi.data.contract.job.list.ListJobResponse;
 import com.helpline.helplineapi.entities.job.JobEntity;
 import com.helpline.helplineapi.mappers.JobMapper;
 import com.helpline.helplineapi.repositories.JobRepository;

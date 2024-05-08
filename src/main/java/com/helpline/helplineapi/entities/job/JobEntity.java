@@ -36,7 +36,7 @@ public class JobEntity extends BaseEntity {
     /**
      * Endereço da vaga
      */
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "fk_address")
     private AddressEntity address;
 
@@ -51,18 +51,11 @@ public class JobEntity extends BaseEntity {
     private long amount;
 
     /**
-     * Ong relacionada a vaga
-     */
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private BaseUserEntity user;
-
-    /**
      * Usuários voluntarios a vaga
      */
-    @OneToMany(mappedBy = "job")
+    @OneToMany(mappedBy = "job", cascade = CascadeType.PERSIST)
     private List<SubscriptionEntity> volunteers;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private OngEntity ong;
 }

@@ -1,8 +1,17 @@
 package com.helpline.helplineapi.controllers;
 
 import com.helpline.helplineapi.data.contract.job.*;
+import com.helpline.helplineapi.data.contract.job.create.CreateJobRequest;
+import com.helpline.helplineapi.data.contract.job.create.CreateJobResponse;
+import com.helpline.helplineapi.data.contract.job.delete.DeleteJobRequest;
+import com.helpline.helplineapi.data.contract.job.delete.DeleteJobResponse;
+import com.helpline.helplineapi.data.contract.job.list.ListJobRequest;
+import com.helpline.helplineapi.data.contract.job.list.ListJobResponse;
+import com.helpline.helplineapi.data.contract.job.update.UpdateJobRequest;
+import com.helpline.helplineapi.data.contract.job.update.UpdateJobResponse;
 import com.helpline.helplineapi.entities.user.BaseUserEntity;
 import com.helpline.helplineapi.services.job.CreateJobService;
+import com.helpline.helplineapi.services.job.DeleteJobService;
 import com.helpline.helplineapi.services.job.ListJobService;
 import com.helpline.helplineapi.services.job.UpdateJobService;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +25,13 @@ public class JobController {
     private final UpdateJobService updateJobService;
     private final ListJobService listJobService;
 
-    public JobController(CreateJobService createJobService, UpdateJobService updateJobService, ListJobService listJobService) {
+    private final DeleteJobService deleteJobService;
+
+    public JobController(CreateJobService createJobService, UpdateJobService updateJobService, ListJobService listJobService, DeleteJobService deleteJobService) {
         this.createJobService = createJobService;
         this.updateJobService = updateJobService;
         this.listJobService = listJobService;
+        this.deleteJobService = deleteJobService;
     }
 
     @PostMapping
@@ -57,5 +69,13 @@ public class JobController {
         request.setJobId(id);
 
         return updateJobService.process(request);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DeleteJobResponse> delete(@PathVariable UUID id) {
+        var request = new DeleteJobRequest();
+        request.setId(id);
+
+        return deleteJobService.process(request);
     }
 }
