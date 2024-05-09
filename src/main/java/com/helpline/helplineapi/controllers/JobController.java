@@ -14,12 +14,14 @@ import com.helpline.helplineapi.services.job.CreateJobService;
 import com.helpline.helplineapi.services.job.DeleteJobService;
 import com.helpline.helplineapi.services.job.ListJobService;
 import com.helpline.helplineapi.services.job.UpdateJobService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/jobs")
+@SecurityRequirement(name = "helpline-api")
 public class JobController {
     private final CreateJobService createJobService;
     private final UpdateJobService updateJobService;
