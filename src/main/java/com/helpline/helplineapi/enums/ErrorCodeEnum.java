@@ -12,7 +12,9 @@ public enum ErrorCodeEnum {
 
     UNEXPECTED_ERROR(3),
 
-    INVALID_PROPERTY(4);
+    INVALID_PROPERTY(4),
+
+    OPERATION_NOT_PERMITTED(5);
 
     public final int number;
 

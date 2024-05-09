@@ -14,6 +14,7 @@ import com.helpline.helplineapi.services.user.AuthService;
 import com.helpline.helplineapi.services.user.ListUserService;
 import com.helpline.helplineapi.services.user.LoginService;
 import com.helpline.helplineapi.services.user.RegisterUserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
@@ -26,9 +27,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.StringJoiner;
 
+@CrossOrigin
 @RestController()
 @RequestMapping("auth")
-@CrossOrigin
+@SecurityRequirement(name = "helpline-api")
 public class UserController {
 
     @Autowired
@@ -111,6 +113,5 @@ public class UserController {
         httpHeaders.setContentDisposition(disposition);
 
         return new ResponseEntity<FileSystemResource>(fileResource, httpHeaders, HttpStatus.OK);
-
     }
 }
