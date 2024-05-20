@@ -35,6 +35,8 @@ public abstract class BaseUserEntity extends BaseEntity implements UserDetails {
 
     private String document;
 
+    private String profilePicUrl;
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
 

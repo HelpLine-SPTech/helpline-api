@@ -6,26 +6,21 @@ import com.helpline.helplineapi.data.contract.user.auth.register.RegisterRequest
 import com.helpline.helplineapi.data.contract.user.auth.register.RegisterResponse;
 import com.helpline.helplineapi.data.contract.user.list.UserListRequest;
 import com.helpline.helplineapi.data.contract.user.list.UserListResponse;
+import com.helpline.helplineapi.data.contract.user.profilepic.UpdateProfilePicRequest;
+import com.helpline.helplineapi.data.contract.user.profilepic.UpdateProfilePicResponse;
 import com.helpline.helplineapi.entities.user.BaseUserEntity;
 import com.helpline.helplineapi.enums.UserTypeEnum;
-import com.helpline.helplineapi.infra.security.TokenService;
-import com.helpline.helplineapi.mappers.UserMapper;
-import com.helpline.helplineapi.services.user.AuthService;
 import com.helpline.helplineapi.services.user.ListUserService;
 import com.helpline.helplineapi.services.user.LoginService;
 import com.helpline.helplineapi.services.user.RegisterUserService;
+import com.helpline.helplineapi.services.user.profilepic.UpdateProfilePicService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.StringJoiner;
+import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin
 @RestController()
@@ -44,6 +39,9 @@ public class UserController {
 
     @Autowired
     ListUserService listUserService;
+
+    @Autowired
+    UpdateProfilePicService updateProfilePicService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Validated LoginRequest body) {
@@ -70,48 +68,12 @@ public class UserController {
         return listUserService.process(request);
     }
 
-    @GetMapping(value = "/report", produces = "text/csv")
-    public ResponseEntity<FileSystemResource> report() throws IOException {
-        var sb = new StringBuilder();
+    @PatchMapping("/profile")
+    public ResponseEntity<UpdateProfilePicResponse> uploadProfilePic(@RequestAttribute("RequesterUser") BaseUserEntity requesterUser, @RequestParam("file") MultipartFile file) {
+        var request = new UpdateProfilePicRequest();
+        request.setUserId(requesterUser.getId());
+        request.setFile(file);
 
-        String[] headers = {"Nome", "Tamanho"};
-
-        String[][] data = {{"Renan", "tamanho teste 1"}, {"Leo", "tamanho teste 2"}};
-
-        var sj1 = new StringJoiner(";");
-        for (String header : headers) {
-            sj1.add(header);
-        }
-
-        sb.append(sj1 + "\n");
-
-        for(String[] d : data) {
-            var sj2 = new StringJoiner(";");
-            for (String s : d) {
-                sj2.add(s);
-            }
-            sb.append(sj2 + "\n");
-        }
-
-        FileWriter file = new FileWriter("report.csv");
-        file.write(sb.toString());
-        file.close();
-        var fileResource = new FileSystemResource("report.csv");
-
-        MediaType mediaType = MediaTypeFactory
-                .getMediaType(fileResource)
-                .orElse(MediaType.APPLICATION_OCTET_STREAM);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(mediaType);
-        // 3
-        ContentDisposition disposition = ContentDisposition
-                // 3.2
-                .attachment() // or .attachment()
-                // 3.1
-                .filename(fileResource.getFilename())
-                .build();
-        httpHeaders.setContentDisposition(disposition);
-
-        return new ResponseEntity<FileSystemResource>(fileResource, httpHeaders, HttpStatus.OK);
+        return updateProfilePicService.process(request);
     }
 }
