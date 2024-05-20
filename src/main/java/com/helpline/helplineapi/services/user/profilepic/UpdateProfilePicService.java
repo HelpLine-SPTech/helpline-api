@@ -57,7 +57,6 @@ public class UpdateProfilePicService extends BaseService<UpdateProfilePicRequest
         user.setProfilePicUrl(fileEntity.getUrl());
         userRepository.save(user);
 
-
         response.setUrl(fileEntity.getUrl());
 
         return response;
