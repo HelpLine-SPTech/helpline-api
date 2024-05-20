@@ -18,4 +18,6 @@ public class UserContract {
     private String email;
 
     private String document;
+
+    private String profilePicUrl;
 }
