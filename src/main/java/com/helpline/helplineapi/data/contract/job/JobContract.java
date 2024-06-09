@@ -12,6 +12,8 @@ import java.util.UUID;
 public class JobContract {
     private UUID id;
 
+    private String title;
+
     private String description;
 
     private List<String> abilities;
@@ -21,4 +23,6 @@ public class JobContract {
     private LocalDateTime date;
 
     private long amount;
+
+    private long subscriptions;
 }

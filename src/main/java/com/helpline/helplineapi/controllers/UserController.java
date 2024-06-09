@@ -15,6 +15,7 @@ import com.helpline.helplineapi.services.user.LoginService;
 import com.helpline.helplineapi.services.user.RegisterUserService;
 import com.helpline.helplineapi.services.user.profilepic.UpdateProfilePicService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,12 +45,12 @@ public class UserController {
     UpdateProfilePicService updateProfilePicService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody @Validated LoginRequest body) {
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest body) {
         return loginService.process(body);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest body) {
+    public ResponseEntity<RegisterResponse> register(@RequestBody @Valid RegisterRequest body) {
         return registerUserService.process(body);
     }
 
@@ -69,7 +70,9 @@ public class UserController {
     }
 
     @PatchMapping("/profile")
-    public ResponseEntity<UpdateProfilePicResponse> uploadProfilePic(@RequestAttribute("RequesterUser") BaseUserEntity requesterUser, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<UpdateProfilePicResponse> uploadProfilePic(
+            @RequestAttribute("RequesterUser") BaseUserEntity requesterUser,
+            @RequestParam("file") MultipartFile file) {
         var request = new UpdateProfilePicRequest();
         request.setUserId(requesterUser.getId());
         request.setFile(file);

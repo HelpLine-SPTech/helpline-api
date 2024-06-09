@@ -2,6 +2,7 @@ package com.helpline.helplineapi.data.contract.user.auth.register;
 
 import com.helpline.helplineapi.enums.UserRole;
 import com.helpline.helplineapi.enums.UserTypeEnum;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.Setter;
 public class RegisterRequest {
     private String email;
 
+    @NotBlank
     private String password;
 
     private String name;

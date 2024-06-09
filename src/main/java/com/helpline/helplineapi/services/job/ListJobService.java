@@ -24,9 +24,17 @@ public class ListJobService extends BaseService<ListJobRequest, ListJobResponse>
     @Override
     protected ListJobResponse processService(ListJobRequest listJobRequest) {
         Sort.Direction direction = listJobRequest.getOrder().equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Pageable pageable = PageRequest.of(listJobRequest.getPage(), listJobRequest.getSize(), Sort.by(direction, listJobRequest.getSort()));
+        Pageable pageable = PageRequest.of(listJobRequest.getPage() - 1, listJobRequest.getSize(), Sort.by(direction, listJobRequest.getSort()));
         Page<JobEntity> jobEntities = repository.findAllByOngId(listJobRequest.getOngId(), pageable);
+
+
         List<JobContract> jobContracts = JobMapper.toDto(jobEntities.getContent());
+        if(!listJobRequest.getDesc().isEmpty()) {
+            jobContracts = jobContracts
+                    .stream()
+                    .filter(j -> j.getDescription().toLowerCase().contains(listJobRequest.getDesc().toLowerCase()) || j.getTitle().toLowerCase().contains(listJobRequest.getDesc().toLowerCase()))
+                    .toList();
+        }
 
         var response = new ListJobResponse();
         response.setJobs(jobContracts);

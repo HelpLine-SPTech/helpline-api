@@ -23,6 +23,11 @@ import java.util.List;
 @Table(name = "job")
 public class JobEntity extends BaseEntity {
     /**
+     * Titulo da vaga
+     */
+    private String title;
+
+    /**
      * Descrição da vaga
      */
     private String description;

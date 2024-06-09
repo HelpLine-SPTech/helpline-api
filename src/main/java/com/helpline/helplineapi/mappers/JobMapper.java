@@ -11,12 +11,22 @@ import java.util.List;
 public abstract class JobMapper {
     public static JobContract toDto(JobEntity job) {
         var dto = new JobContract();
-        dto.setId(job.getId());
+        if(job.getId() != null) {
+            dto.setId(job.getId());
+        }
+        dto.setTitle(job.getTitle());
         dto.setDescription(job.getDescription());
         dto.setAbilities(job.getAbilities());
         dto.setAddress(AddressMapper.toDto(job.getAddress()));
         dto.setDate(job.getDate());
         dto.setAmount(job.getAmount());
+        long subscriptions = 0;
+
+        if(job.getVolunteers() != null) {
+            subscriptions = job.getVolunteers().size();
+        }
+
+        dto.setSubscriptions(subscriptions);
 
         return dto;
     }
@@ -27,7 +37,10 @@ public abstract class JobMapper {
 
     public static JobEntity toEntity(JobContract self) {
         var entity = new JobEntity();
-        entity.setId(self.getId());
+        if(self.getId() != null) {
+            entity.setId(self.getId());
+        }
+        entity.setTitle(self.getTitle());
         entity.setDescription(self.getDescription());
         entity.setAbilities(self.getAbilities());
         entity.setAddress(AddressMapper.toEntity(self.getAddress()));
@@ -38,6 +51,7 @@ public abstract class JobMapper {
     }
 
     public static JobEntity merge(JobContract self, JobEntity entity) {
+        entity.setTitle(self.getTitle());
         entity.setDescription(self.getDescription());
         entity.setAbilities(self.getAbilities());
         entity.setAddress(AddressMapper.toEntity(self.getAddress()));
