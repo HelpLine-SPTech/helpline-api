@@ -5,6 +5,9 @@ import com.helpline.helplineapi.entities.address.AddressEntity;
 
 public abstract class AddressMapper {
     public static AddressEntity toEntity(AddressContract self) {
+        if(self == null) {
+            return null;
+        }
         var entity = new AddressEntity();
         entity.setId(self.getId());
         entity.setState(self.getState());
@@ -19,6 +22,9 @@ public abstract class AddressMapper {
     }
 
     public static AddressContract toDto(AddressEntity self) {
+        if(self == null) {
+            return null;
+        }
         var dto = new AddressContract();
         dto.setId(self.getId());
         dto.setState(self.getState());

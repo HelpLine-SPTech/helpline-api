@@ -26,7 +26,7 @@ public abstract class BaseService<TRequest, TResponse extends BaseResponse> {
 
             var finalResponse = this.processService(request);
 
-            if(!finalResponse.getErrors().isEmpty()) {
+            if(!finalResponse.getSuccess()) {
                 return ResponseEntity.badRequest().body(finalResponse);
             }
 

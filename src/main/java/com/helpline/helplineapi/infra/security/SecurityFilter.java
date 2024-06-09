@@ -27,15 +27,19 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var token = this.recoverToken(request);
-        if(token != null && !token.equals("")) {
-            var id = tokenService.validateToken(token);
-            var user = repository.findById(UUID.fromString(id));
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.get().getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
+        try {
+            var token = this.recoverToken(request);
+            if(token != null && !token.isEmpty()) {
+                var id = tokenService.validateToken(token);
+                var user = repository.findById(UUID.fromString(id));
+                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.get().getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
 
-        filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
+        } catch (IllegalArgumentException ex) {
+            filterChain.doFilter(request, response);
+        }
     }
 
     private String recoverToken(HttpServletRequest request) {

@@ -33,7 +33,6 @@ public class LoginService extends BaseService<LoginRequest, LoginResponse> {
         var response = new LoginResponse();
 
         var user = (BaseUserEntity) auth.getPrincipal();
-
         var token = tokenService.generateToken(user);
         response.setUser(UserMapper.toUserResult(user));
         response.setToken(token);
