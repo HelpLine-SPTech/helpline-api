@@ -7,5 +7,4 @@ import java.util.UUID;
 @Getter @Setter
 public class GetOngVolunteersRequest {
   private UUID ongId;
-  private UUID userId;
 }
