@@ -14,7 +14,11 @@ public enum ErrorCodeEnum {
 
     INVALID_PROPERTY(4),
 
-    OPERATION_NOT_PERMITTED(5);
+    OPERATION_NOT_PERMITTED(5),
+
+    JOB_FULL(6),
+
+    ALREADY_APPLIED(7);
 
     public final int number;
 

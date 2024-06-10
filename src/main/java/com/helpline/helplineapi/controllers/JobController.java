@@ -9,6 +9,7 @@ import com.helpline.helplineapi.data.contract.job.list.GetJobByIdRequest;
 import com.helpline.helplineapi.data.contract.job.list.GetJobByIdResponse;
 import com.helpline.helplineapi.data.contract.job.list.ListJobRequest;
 import com.helpline.helplineapi.data.contract.job.list.ListJobResponse;
+import com.helpline.helplineapi.data.contract.job.subscribe.SubscribeRequest;
 import com.helpline.helplineapi.data.contract.job.update.UpdateJobRequest;
 import com.helpline.helplineapi.data.contract.job.update.UpdateJobResponse;
 import com.helpline.helplineapi.entities.user.BaseUserEntity;
@@ -27,14 +28,15 @@ public class JobController {
     private final UpdateJobService updateJobService;
     private final ListJobService listJobService;
     private final DeleteJobService deleteJobService;
-    private final GetJobByIdService getJobByIdService;
+    private final SubscribeService subscribeService;
 
-    public JobController(CreateJobService createJobService, UpdateJobService updateJobService, ListJobService listJobService, DeleteJobService deleteJobService, GetJobByIdService getJobByIdService) {
+    public JobController(CreateJobService createJobService, UpdateJobService updateJobService, ListJobService listJobService, DeleteJobService deleteJobService, SubscribeService subscribeService) {
         this.createJobService = createJobService;
         this.updateJobService = updateJobService;
         this.listJobService = listJobService;
         this.deleteJobService = deleteJobService;
         this.getJobByIdService = getJobByIdService;
+        this.subscribeService = subscribeService;
     }
 
     @PostMapping
@@ -90,5 +92,15 @@ public class JobController {
         request.setId(id);
 
         return deleteJobService.process(request);
+    }
+
+    @PostMapping("/{id}/subscribe")
+    public ResponseEntity subscribe(
+            @PathVariable UUID id,
+            @RequestAttribute("RequesterUser") BaseUserEntity requester) {
+        var request = new SubscribeRequest();
+        request.setJobId(id);
+        request.setUserId(requester.getId());
+        return subscribeService.process(request);
     }
 }
