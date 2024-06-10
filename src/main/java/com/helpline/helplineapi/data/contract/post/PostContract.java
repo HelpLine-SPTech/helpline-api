@@ -21,6 +21,8 @@ public class PostContract {
 
     private List<CommentContract> comments;
 
+    private UserContract user;
+
     private LocalDateTime addedAt;
 }
 

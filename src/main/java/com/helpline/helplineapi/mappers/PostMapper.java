@@ -19,6 +19,7 @@ public abstract class PostMapper {
         dto.setContent(self.getContent());
         dto.setImages(FileMapper.toDto(self.getImages()));
         dto.setAddedAt(self.getAddedAt());
+        dto.setUser(UserMapper.toUserResult(self.getUser()));
 
         return dto;
     }

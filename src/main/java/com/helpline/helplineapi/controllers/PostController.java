@@ -15,6 +15,7 @@ import com.helpline.helplineapi.services.post.CommentPostService;
 import com.helpline.helplineapi.services.post.CreatePostService;
 import com.helpline.helplineapi.services.post.LikePostService;
 import com.helpline.helplineapi.services.post.ListPostService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/posts")
+@SecurityRequirement(name = "helpline-api")
 public class PostController {
     @Autowired
     private CreatePostService createPostService;
