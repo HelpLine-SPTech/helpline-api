@@ -10,6 +10,8 @@ public class ListJobRequest {
 
     private UUID ongId;
 
+    private String desc;
+
     private String sort;
 
     private String order;

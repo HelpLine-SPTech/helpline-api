@@ -12,7 +12,8 @@ public abstract class UserMapper {
                 self.getName(),
                 self.getEmail(),
                 self.getDocument(),
-                self.getProfilePicUrl()
+                self.getProfilePicUrl(),
+                AddressMapper.toDto(self.getAddress())
         );
     }
 

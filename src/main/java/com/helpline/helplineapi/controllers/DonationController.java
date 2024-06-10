@@ -15,6 +15,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@CrossOrigin
 @RequestMapping("/donations")
 @SecurityRequirement(name = "helpline-api")
 public class DonationController {
