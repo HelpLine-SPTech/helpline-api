@@ -5,6 +5,6 @@ import lombok.Setter;
 import java.util.UUID;
 
 @Getter @Setter
-public class GetOngVolunteersRequest {
-  private UUID ongId;
+public class GetChatUsersRequest {
+  private UUID userId;
 }

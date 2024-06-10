@@ -1,7 +1,7 @@
 package com.helpline.helplineapi.services.dashboard.chat;
 
-import com.helpline.helplineapi.data.contract.chat.GetOngVolunteersRequest;
-import com.helpline.helplineapi.data.contract.chat.GetOngVolunteersResponse;
+import com.helpline.helplineapi.data.contract.chat.GetChatUsersRequest;
+import com.helpline.helplineapi.data.contract.chat.GetChatUsersResponse;
 import com.helpline.helplineapi.data.contract.user.UserContract;
 import com.helpline.helplineapi.entities.job.SubscriptionEntity;
 import com.helpline.helplineapi.mappers.UserMapper;
@@ -14,17 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GetOngVolunteersService extends BaseService<GetOngVolunteersRequest, GetOngVolunteersResponse> {
+public class GetOngVolunteersService extends BaseService<GetChatUsersRequest, GetChatUsersResponse> {
   @Autowired
   private JobRepository jobRepository;
 
   @Override
-  protected GetOngVolunteersResponse processService(GetOngVolunteersRequest request) {
-    var response = new GetOngVolunteersResponse();
+  protected GetChatUsersResponse processService(GetChatUsersRequest request) {
+    var response = new GetChatUsersResponse();
     List<SubscriptionEntity> subscriptionEntityList = new ArrayList<>();
     List<UserContract> users = new ArrayList<>();
 
-    var jobs = jobRepository.findAllByOngId(request.getOngId());
+    var jobs = jobRepository.findAllByOngId(request.getUserId());
     jobs.forEach(job -> {
       subscriptionEntityList.addAll(job.getVolunteers());
     });
@@ -36,7 +36,7 @@ public class GetOngVolunteersService extends BaseService<GetOngVolunteersRequest
   }
 
   @Override
-  protected GetOngVolunteersResponse validateService(GetOngVolunteersRequest getOngVolunteersRequest) {
-    return new GetOngVolunteersResponse();
+  protected GetChatUsersResponse validateService(GetChatUsersRequest getOngVolunteersRequest) {
+    return new GetChatUsersResponse();
   }
 }

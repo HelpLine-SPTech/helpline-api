@@ -1,11 +1,12 @@
 package com.helpline.helplineapi.controllers;
-import com.helpline.helplineapi.data.contract.chat.GetOngVolunteersRequest;
-import com.helpline.helplineapi.data.contract.chat.GetOngVolunteersResponse;
+import com.helpline.helplineapi.data.contract.chat.GetChatUsersRequest;
+import com.helpline.helplineapi.data.contract.chat.GetChatUsersResponse;
 import com.helpline.helplineapi.entities.chat.ChatMessage;
 import com.helpline.helplineapi.entities.chat.ChatNotification;
 import com.helpline.helplineapi.entities.user.BaseUserEntity;
 import com.helpline.helplineapi.services.dashboard.chat.ChatMessageService;
 import com.helpline.helplineapi.services.dashboard.chat.GetOngVolunteersService;
+import com.helpline.helplineapi.services.dashboard.chat.GetVolunteerOngsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -23,7 +24,7 @@ public class ChatController {
   private final SimpMessagingTemplate messagingTemplate;
   private final ChatMessageService chatMsgService;
   private final GetOngVolunteersService getOngVolunteersService;
-
+  private final GetVolunteerOngsService getVolunteerOngsService;
 
   @MessageMapping("/chat")
   public void processMessage(@Payload ChatMessage chatMessage){
@@ -46,9 +47,16 @@ public class ChatController {
   }
 
   @GetMapping("/users")
-  public ResponseEntity<GetOngVolunteersResponse> getOngVolunteers(@RequestAttribute("RequesterUser") BaseUserEntity requesterUser) {
-    var request = new GetOngVolunteersRequest();
-    request.setOngId(requesterUser.getId());
+  public ResponseEntity<GetChatUsersResponse> getOngVolunteers(@RequestAttribute("RequesterUser") BaseUserEntity requesterUser) {
+    var request = new GetChatUsersRequest();
+    request.setUserId(requesterUser.getId());
     return getOngVolunteersService.process(request);
+  }
+
+  @GetMapping("/ongs")
+  public ResponseEntity<GetChatUsersResponse> getVolunteerOngs(@RequestAttribute("RequesterUser") BaseUserEntity requesterUser) {
+    var request = new GetChatUsersRequest();
+    request.setUserId(requesterUser.getId());
+    return getVolunteerOngsService.process(request);
   }
 }
