@@ -7,13 +7,11 @@ import com.helpline.helplineapi.data.contract.job.delete.DeleteJobRequest;
 import com.helpline.helplineapi.data.contract.job.delete.DeleteJobResponse;
 import com.helpline.helplineapi.data.contract.job.list.ListJobRequest;
 import com.helpline.helplineapi.data.contract.job.list.ListJobResponse;
+import com.helpline.helplineapi.data.contract.job.subscribe.SubscribeRequest;
 import com.helpline.helplineapi.data.contract.job.update.UpdateJobRequest;
 import com.helpline.helplineapi.data.contract.job.update.UpdateJobResponse;
 import com.helpline.helplineapi.entities.user.BaseUserEntity;
-import com.helpline.helplineapi.services.job.CreateJobService;
-import com.helpline.helplineapi.services.job.DeleteJobService;
-import com.helpline.helplineapi.services.job.ListJobService;
-import com.helpline.helplineapi.services.job.UpdateJobService;
+import com.helpline.helplineapi.services.job.*;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +24,15 @@ public class JobController {
     private final CreateJobService createJobService;
     private final UpdateJobService updateJobService;
     private final ListJobService listJobService;
-
     private final DeleteJobService deleteJobService;
+    private final SubscribeService subscribeService;
 
-    public JobController(CreateJobService createJobService, UpdateJobService updateJobService, ListJobService listJobService, DeleteJobService deleteJobService) {
+    public JobController(CreateJobService createJobService, UpdateJobService updateJobService, ListJobService listJobService, DeleteJobService deleteJobService, SubscribeService subscribeService) {
         this.createJobService = createJobService;
         this.updateJobService = updateJobService;
         this.listJobService = listJobService;
         this.deleteJobService = deleteJobService;
+        this.subscribeService = subscribeService;
     }
 
     @PostMapping
@@ -79,5 +78,15 @@ public class JobController {
         request.setId(id);
 
         return deleteJobService.process(request);
+    }
+
+    @PostMapping("/{id}/subscribe")
+    public ResponseEntity subscribe(
+            @PathVariable UUID id,
+            @RequestAttribute("RequesterUser") BaseUserEntity requester) {
+        var request = new SubscribeRequest();
+        request.setJobId(id);
+        request.setUserId(requester.getId());
+        return subscribeService.process(request);
     }
 }
