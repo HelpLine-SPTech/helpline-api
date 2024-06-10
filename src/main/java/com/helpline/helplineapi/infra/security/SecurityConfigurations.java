@@ -26,6 +26,11 @@ public class SecurityConfigurations {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
+                .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> {
+                    httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint((request, response, authException) -> {
+                        System.out.println(authException);
+                    });
+                })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "/docs").permitAll()
@@ -33,7 +38,12 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/report").permitAll()
                         .requestMatchers(HttpMethod.POST, "/nome").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/dashboard").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/jobs/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/jobs/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/h2-console").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
