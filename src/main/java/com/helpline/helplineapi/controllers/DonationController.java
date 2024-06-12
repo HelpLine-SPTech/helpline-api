@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+import java.util.List;
+
 @CrossOrigin
+@RestController
 @RequestMapping("/donations")
 @SecurityRequirement(name = "helpline-api")
 public class DonationController {
@@ -32,7 +34,7 @@ public class DonationController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(mediaType);
         httpHeaders.setAccessControlExposeHeaders(List.of("Content-Disposition"));
-
+        httpHeaders.setAccessControlExposeHeaders(List.of("Content-Disposition"));
         ContentDisposition disposition = ContentDisposition
                 .attachment()
                 .filename(response.getCsv().getFilename())
