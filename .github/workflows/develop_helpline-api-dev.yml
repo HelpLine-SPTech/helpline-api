@@ -38,13 +38,13 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
-  
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
           name: java-app
-      
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
@@ -59,4 +59,3 @@ jobs:
           app-name: 'helpline-api-dev'
           slot-name: 'Production'
           package: '*.jar'
-          
