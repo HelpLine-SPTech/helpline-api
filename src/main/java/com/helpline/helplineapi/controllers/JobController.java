@@ -29,8 +29,9 @@ public class JobController {
     private final ListJobService listJobService;
     private final DeleteJobService deleteJobService;
     private final SubscribeService subscribeService;
+    private final GetJobByIdService getJobByIdService;
 
-    public JobController(CreateJobService createJobService, UpdateJobService updateJobService, ListJobService listJobService, DeleteJobService deleteJobService, SubscribeService subscribeService) {
+    public JobController(CreateJobService createJobService, UpdateJobService updateJobService, ListJobService listJobService, DeleteJobService deleteJobService, SubscribeService subscribeService, GetJobByIdService getJobByIdService){
         this.createJobService = createJobService;
         this.updateJobService = updateJobService;
         this.listJobService = listJobService;
