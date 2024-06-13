@@ -1,11 +1,13 @@
 package com.helpline.helplineapi.data.contract.user;
 
 import com.helpline.helplineapi.data.contract.address.AddressContract;
+import com.helpline.helplineapi.enums.UserTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter @Setter
@@ -16,6 +18,8 @@ public class UserContract {
 
     private String name;
 
+    private String bio;
+
     private String email;
 
     private String document;
@@ -23,4 +27,8 @@ public class UserContract {
     private String profilePicUrl;
 
     private AddressContract address;
+
+    private String type;
+
+    private List<String> abilities;
 }

@@ -19,9 +19,9 @@ public class ListPostService extends BaseService<ListPostRequest, ListPostRespon
     protected ListPostResponse processService(ListPostRequest listPostRequest) {
         var response = new ListPostResponse();
 
-        var posts = postRepository.findAll(Sort.by("addedAt"));
+        var posts = postRepository.findAll(Sort.by("addedAt").descending());
 
-        response.setPosts(PostMapper.toDto(posts));
+        response.setPosts(PostMapper.toDto(posts, listPostRequest.getRequesterUserId()));
 
         return response;
     }

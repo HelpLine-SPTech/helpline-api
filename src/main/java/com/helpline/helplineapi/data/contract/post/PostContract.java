@@ -15,7 +15,9 @@ public class PostContract {
 
     private String content;
 
-    private long likes;
+    private List<LikeContract> likes;
+
+    private boolean isLiked;
 
     private List<FileContract> images;
 
@@ -24,5 +26,6 @@ public class PostContract {
     private UserContract user;
 
     private LocalDateTime addedAt;
+
 }
 

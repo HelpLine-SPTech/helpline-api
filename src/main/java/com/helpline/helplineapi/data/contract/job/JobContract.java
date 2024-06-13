@@ -1,6 +1,7 @@
 package com.helpline.helplineapi.data.contract.job;
 
 import com.helpline.helplineapi.data.contract.address.AddressContract;
+import com.helpline.helplineapi.data.contract.user.UserContract;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,4 +26,6 @@ public class JobContract {
     private long amount;
 
     private long subscriptions;
+
+    private UserContract user;
 }

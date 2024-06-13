@@ -4,15 +4,17 @@ import com.helpline.helplineapi.data.contract.user.auth.login.LoginRequest;
 import com.helpline.helplineapi.data.contract.user.auth.login.LoginResponse;
 import com.helpline.helplineapi.data.contract.user.auth.register.RegisterRequest;
 import com.helpline.helplineapi.data.contract.user.auth.register.RegisterResponse;
+import com.helpline.helplineapi.data.contract.user.getById.GetUserByIdRequest;
+import com.helpline.helplineapi.data.contract.user.getById.GetUserByIdResponse;
 import com.helpline.helplineapi.data.contract.user.list.UserListRequest;
 import com.helpline.helplineapi.data.contract.user.list.UserListResponse;
 import com.helpline.helplineapi.data.contract.user.profilepic.UpdateProfilePicRequest;
 import com.helpline.helplineapi.data.contract.user.profilepic.UpdateProfilePicResponse;
+import com.helpline.helplineapi.data.contract.user.updateName.UpdateUserNameRequest;
+import com.helpline.helplineapi.data.contract.user.updateName.UpdateUserNameResponse;
 import com.helpline.helplineapi.entities.user.BaseUserEntity;
 import com.helpline.helplineapi.enums.UserTypeEnum;
-import com.helpline.helplineapi.services.user.ListUserService;
-import com.helpline.helplineapi.services.user.LoginService;
-import com.helpline.helplineapi.services.user.RegisterUserService;
+import com.helpline.helplineapi.services.user.*;
 import com.helpline.helplineapi.services.user.profilepic.UpdateProfilePicService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -22,6 +24,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.UUID;
 
 @CrossOrigin
 @RestController()
@@ -43,6 +47,12 @@ public class UserController {
 
     @Autowired
     UpdateProfilePicService updateProfilePicService;
+
+    @Autowired
+    GetUserByIdService getUserByIdService;
+
+    @Autowired
+    UpdateUserNameService updateUserNameService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest body) {
@@ -78,5 +88,20 @@ public class UserController {
         request.setFile(file);
 
         return updateProfilePicService.process(request);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GetUserByIdResponse> getById(@PathVariable UUID id) {
+        var request = new GetUserByIdRequest();
+        request.setId(id);
+
+        return getUserByIdService.process(request);
+    }
+
+    @PatchMapping("/{id}/name")
+    public ResponseEntity<UpdateUserNameResponse> updateUserName(@PathVariable UUID id, @RequestBody UpdateUserNameRequest request) {
+        request.setUserId(id);
+
+        return updateUserNameService.process(request);
     }
 }

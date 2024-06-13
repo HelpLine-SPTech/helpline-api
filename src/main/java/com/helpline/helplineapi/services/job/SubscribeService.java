@@ -63,7 +63,7 @@ public class SubscribeService extends BaseService<SubscribeRequest, SubscribeRes
 
         this.job = jobOpt.get();
 
-        if(this.job.getAmount() >= this.job.getVolunteers().size()) {
+        if(this.job.getVolunteers().size() >= this.job.getAmount()) {
             response.addError(ErrorCodeEnum.JOB_FULL);
             return response;
         }
