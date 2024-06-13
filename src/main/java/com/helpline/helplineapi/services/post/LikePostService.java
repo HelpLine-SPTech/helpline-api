@@ -6,6 +6,7 @@ import com.helpline.helplineapi.entities.post.LikeEntity;
 import com.helpline.helplineapi.entities.post.PostEntity;
 import com.helpline.helplineapi.entities.user.BaseUserEntity;
 import com.helpline.helplineapi.enums.ErrorCodeEnum;
+import com.helpline.helplineapi.mappers.LikeMapper;
 import com.helpline.helplineapi.repositories.BaseUserRepository;
 import com.helpline.helplineapi.repositories.LikeRepository;
 import com.helpline.helplineapi.repositories.PostRepository;
@@ -31,13 +32,31 @@ public class LikePostService extends BaseService<LikePostRequest, LikePostRespon
 
     @Override
     protected LikePostResponse processService(LikePostRequest request) {
+        var response = new LikePostResponse();
 
+        if(isPostLiked(request)) {
+            unlikePost();
+        } else {
+            likePost(request, response);
+        }
+
+        return response;
+    }
+
+    private boolean isPostLiked(LikePostRequest request) {
+        return post.getLikes().stream().anyMatch(like -> like.getUser().getId() == request.getUserId());
+    }
+
+    private void unlikePost() {
+        likeRepository.deleteByUserIdAndPostId(user.getId(), post.getId());
+    }
+
+    private void likePost(LikePostRequest request, LikePostResponse response) {
         var like = new LikeEntity();
-        like.setPost(post);
         like.setUser(user);
-        likeRepository.save(like);
-
-        return new LikePostResponse();
+        like.setPost(post);
+        var saved = likeRepository.save(like);
+        response.setLike(LikeMapper.toDto(saved));
     }
 
     @Override

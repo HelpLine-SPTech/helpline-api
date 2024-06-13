@@ -12,6 +12,8 @@ import com.helpline.helplineapi.data.contract.job.list.ListJobResponse;
 import com.helpline.helplineapi.data.contract.job.subscribe.SubscribeRequest;
 import com.helpline.helplineapi.data.contract.job.update.UpdateJobRequest;
 import com.helpline.helplineapi.data.contract.job.update.UpdateJobResponse;
+import com.helpline.helplineapi.data.contract.post.all.GetAllJobsRequest;
+import com.helpline.helplineapi.data.contract.post.all.GetAllJobsResponse;
 import com.helpline.helplineapi.entities.user.BaseUserEntity;
 import com.helpline.helplineapi.services.job.*;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -31,13 +33,16 @@ public class JobController {
     private final SubscribeService subscribeService;
     private final GetJobByIdService getJobByIdService;
 
-    public JobController(CreateJobService createJobService, UpdateJobService updateJobService, ListJobService listJobService, DeleteJobService deleteJobService, SubscribeService subscribeService, GetJobByIdService getJobByIdService){
+    private final GetAllJobsService getAllJobsService;
+
+    public JobController(CreateJobService createJobService, UpdateJobService updateJobService, ListJobService listJobService, DeleteJobService deleteJobService, SubscribeService subscribeService, GetJobByIdService getJobByIdService, GetAllJobsService getAllJobsService){
         this.createJobService = createJobService;
         this.updateJobService = updateJobService;
         this.listJobService = listJobService;
         this.deleteJobService = deleteJobService;
         this.getJobByIdService = getJobByIdService;
         this.subscribeService = subscribeService;
+        this.getAllJobsService = getAllJobsService;
     }
 
     @PostMapping
@@ -103,5 +108,10 @@ public class JobController {
         request.setJobId(id);
         request.setUserId(requester.getId());
         return subscribeService.process(request);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<GetAllJobsResponse> getAll() {
+        return getAllJobsService.process(new GetAllJobsRequest());
     }
 }

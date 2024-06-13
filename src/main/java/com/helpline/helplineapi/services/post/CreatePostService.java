@@ -55,7 +55,7 @@ public class CreatePostService extends BaseService<CreatePostRequest, CreatePost
         savedPost = postRepository.save(savedPost);
         if(!response.getSuccess()) return response;
 
-        response.setPost(PostMapper.toDto(savedPost));
+        response.setPost(PostMapper.toDto(savedPost, UUID.randomUUID()));
 
         return response;
     }

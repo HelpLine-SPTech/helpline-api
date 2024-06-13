@@ -14,6 +14,7 @@ public abstract class JobMapper {
         if(job.getId() != null) {
             dto.setId(job.getId());
         }
+        dto.setUser(UserMapper.toUserResult(job.getOng()));
         dto.setTitle(job.getTitle());
         dto.setDescription(job.getDescription());
         dto.setAbilities(job.getAbilities());

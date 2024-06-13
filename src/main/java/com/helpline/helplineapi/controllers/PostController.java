@@ -6,15 +6,14 @@ import com.helpline.helplineapi.data.contract.post.comment.CommentPostRequest;
 import com.helpline.helplineapi.data.contract.post.comment.CommentPostResponse;
 import com.helpline.helplineapi.data.contract.post.create.CreatePostRequest;
 import com.helpline.helplineapi.data.contract.post.create.CreatePostResponse;
+import com.helpline.helplineapi.data.contract.post.getByUserId.GetPostsByUserIdRequest;
+import com.helpline.helplineapi.data.contract.post.getByUserId.GetPostsByUserIdResponse;
 import com.helpline.helplineapi.data.contract.post.like.LikePostRequest;
 import com.helpline.helplineapi.data.contract.post.like.LikePostResponse;
 import com.helpline.helplineapi.data.contract.post.list.ListPostRequest;
 import com.helpline.helplineapi.data.contract.post.list.ListPostResponse;
 import com.helpline.helplineapi.entities.user.BaseUserEntity;
-import com.helpline.helplineapi.services.post.CommentPostService;
-import com.helpline.helplineapi.services.post.CreatePostService;
-import com.helpline.helplineapi.services.post.LikePostService;
-import com.helpline.helplineapi.services.post.ListPostService;
+import com.helpline.helplineapi.services.post.*;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +40,9 @@ public class PostController {
     @Autowired
     private CommentPostService commentPostService;
 
+    @Autowired
+    private GetPostsByUserIdService getPostsByUserIdService;
+
     @PostMapping
     private ResponseEntity<CreatePostResponse> create(
             @RequestAttribute("RequesterUser") BaseUserEntity requester,
@@ -55,8 +57,11 @@ public class PostController {
     }
 
     @GetMapping
-    private ResponseEntity<ListPostResponse> list() {
-        return listPostService.process(new ListPostRequest());
+    private ResponseEntity<ListPostResponse> list(@RequestAttribute("RequesterUser") BaseUserEntity requester) {
+        var request = new ListPostRequest();
+        request.setRequesterUserId(requester.getId());
+
+        return listPostService.process(request);
     }
 
     @PostMapping("/{id}/like")
@@ -79,5 +84,14 @@ public class PostController {
         request.setUserId(requester.getId());
 
         return commentPostService.process(request);
+    }
+
+    @GetMapping("/user")
+    private ResponseEntity<GetPostsByUserIdResponse> getByUserId(@RequestParam(name = "userId") UUID id, @RequestAttribute("RequesterUser") BaseUserEntity requesterUser) {
+        var request = new GetPostsByUserIdRequest();
+        request.setUserId(id);
+        request.setRequesterUserId(requesterUser.getId());
+
+        return getPostsByUserIdService.process(request);
     }
 }
