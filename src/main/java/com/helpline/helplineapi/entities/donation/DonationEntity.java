@@ -12,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Optional;
+
 /**
  * Entidade que representa uma doacao de um usuario para uma ong
  */
@@ -24,7 +26,12 @@ public class DonationEntity extends BaseEntity {
     /**
      * Quantidade doada em inteiro
      */
-    private long amount;
+    private Long amount;
+
+    /**
+     * Quantidade de itens doados
+     */
+    private Integer quantity;
 
     /**
      * Ong que recebeu a doacao
