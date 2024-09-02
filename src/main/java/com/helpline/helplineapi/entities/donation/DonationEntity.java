@@ -1,18 +1,15 @@
 package com.helpline.helplineapi.entities.donation;
 
 import com.helpline.helplineapi.entities.BaseEntity;
-import com.helpline.helplineapi.entities.user.OngEntity;
+import com.helpline.helplineapi.entities.campaign.CampaignEntity;
 import com.helpline.helplineapi.entities.user.UserEntity;
+import com.helpline.helplineapi.enums.CampaignTypeEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Optional;
 
 /**
  * Entidade que representa uma doacao de um usuario para uma ong
@@ -34,11 +31,15 @@ public class DonationEntity extends BaseEntity {
     private Integer quantity;
 
     /**
-     * Ong que recebeu a doacao
+     * Tipo da campanha (financeira ou de itens)
+     */
+    private CampaignTypeEnum type;
+
+    /**
+     * Campanha na qual a doacao foi realizada
      */
     @ManyToOne()
-    @JoinColumn(name = "ong_id")
-    private OngEntity receiver;
+    private CampaignEntity campaign;
 
     /**
      * Usuario que realizou a doacao

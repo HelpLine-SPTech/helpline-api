@@ -1,4 +1,4 @@
-package com.helpline.helplineapi.entities.campaing;
+package com.helpline.helplineapi.entities.campaign;
 
 import com.helpline.helplineapi.entities.BaseEntity;
 import com.helpline.helplineapi.entities.donation.DonationEntity;
@@ -8,6 +8,7 @@ import com.helpline.helplineapi.enums.CampaignTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -15,11 +16,16 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "campaign")
 @Entity(name = "campaign")
 public class CampaignEntity extends BaseEntity {
 
     private OngEntity ong;
+
+    private String title;
+
+    private String description;
 
     @OneToMany
     private List<DonationEntity> donations;
