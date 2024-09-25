@@ -22,7 +22,7 @@ public class ListCampaignService extends BaseService<ListCampaignRequest, ListCa
     private CampaignRepository repository;
 
     @Override
-    protected ListCampaignResponse processService(ListCampaignReques request) {
+    protected ListCampaignResponse processService(ListCampaignRequest request) {
         Sort.Direction direction = request.getOrder().equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(request.getPage() - 1, request.getSize(), Sort.by(direction, request.getSort()));
         Page<CampaignEntity> campaignEntities = repository.findAllByOngId(request.getOngId(), pageable);
