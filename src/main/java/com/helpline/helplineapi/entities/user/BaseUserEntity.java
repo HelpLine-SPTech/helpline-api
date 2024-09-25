@@ -5,6 +5,7 @@ import com.helpline.helplineapi.entities.address.AddressEntity;
 import com.helpline.helplineapi.entities.job.JobEntity;
 import com.helpline.helplineapi.enums.UserRole;
 import com.helpline.helplineapi.enums.UserTypeEnum;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,6 +45,7 @@ public abstract class BaseUserEntity extends BaseEntity implements UserDetails {
 
     @OneToOne()
     @JoinColumn(name = "fk_address")
+    @Nullable
     private AddressEntity address;
 
     @Override

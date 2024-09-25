@@ -17,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -37,11 +38,13 @@ public class DonationReportService extends BaseService<GetDonationReportRequest,
 
         var campaigns = ong.getCampaigns();
 
-        var donations = campaigns
-                .stream()
-                .flatMap(campaignEntity -> campaignEntity.getDonations().stream())
-                .filter(donation -> donation.getType() == CampaignTypeEnum.MONETARY)
-                .toList();
+//        var donations = campaigns
+//                .stream()
+//                .flatMap(campaignEntity -> campaignEntity.getDonations().stream())
+//                .filter(donation -> donation.getType() == CampaignTypeEnum.MONETARY)
+//                .toList();
+
+        var donations = new ArrayList<DonationEntity>();
         String fileName = String.format("DOACOES_%s_%s.csv", LocalDateTime.now().minusMonths(1).format(dateFormat), LocalDateTime.now().format(dateFormat));
 
         String csvString = getCsvString(donations);

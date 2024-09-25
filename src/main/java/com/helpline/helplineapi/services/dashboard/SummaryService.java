@@ -95,11 +95,13 @@ public class SummaryService extends BaseService<SummaryRequest, SummaryResponse>
     private List<DonationEntity> getDonations(LocalDateTime startDate, LocalDateTime endDate) {
         var campaigns = ong.getCampaigns();
 
-        return campaigns
-                .stream()
-                .flatMap(campaignEntity -> campaignEntity.getDonations().stream())
-                .filter(donation -> donation.getType() == CampaignTypeEnum.MONETARY)
-                .filter(donation -> donation.getAddedAt().isAfter(startDate) && donation.getAddedAt().isBefore(endDate))
-                .toList();
+        return new ArrayList<>();
+
+//        return campaigns
+//                .stream()
+//                .flatMap(campaignEntity -> campaignEntity.getDonations().stream())
+//                .filter(donation -> donation.getType() == CampaignTypeEnum.MONETARY)
+//                .filter(donation -> donation.getAddedAt().isAfter(startDate) && donation.getAddedAt().isBefore(endDate))
+//                .toList();
     }
 }

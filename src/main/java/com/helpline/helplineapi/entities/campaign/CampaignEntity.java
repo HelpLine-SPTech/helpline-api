@@ -21,18 +21,20 @@ import java.util.List;
 @Entity(name = "campaign")
 public class CampaignEntity extends BaseEntity {
 
+    @ManyToOne
     private OngEntity ong;
 
     private String title;
 
     private String description;
 
-    @OneToMany
+    @OneToMany()
     private List<DonationEntity> donations;
 
     @Enumerated(EnumType.STRING)
     private CampaignTypeEnum type;
 
+    @Enumerated(EnumType.STRING)
     private BadgeTypeEnum badgeType;
 
     private Double monetaryGoal;
