@@ -1,0 +1,17 @@
+spring:
+    datasource:
+        url: ${SUPABASE_CONNECTION_STRING}
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
+aws:
+    s3:
+        bucket-name: ${SUPABASE_BUCKET_NAME:helpline-storage}
+api:
+    security:
+        token:
+            secret: ${JWT_SECRET:my-secret}
+springdoc:
+    swagger-ui:
+        path: "/docs"

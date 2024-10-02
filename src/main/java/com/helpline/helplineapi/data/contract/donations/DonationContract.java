@@ -19,4 +19,6 @@ public class DonationContract {
     private UUID donorId;
 
     private UUID campaignId;
+
+    private boolean isConfirmed;
 }
