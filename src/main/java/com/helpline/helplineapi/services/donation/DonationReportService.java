@@ -4,6 +4,7 @@ import com.helpline.helplineapi.data.contract.donations.report.GetDonationReport
 import com.helpline.helplineapi.data.contract.donations.report.GetDonationReportResponse;
 import com.helpline.helplineapi.entities.donation.DonationEntity;
 import com.helpline.helplineapi.entities.user.OngEntity;
+import com.helpline.helplineapi.enums.CampaignTypeEnum;
 import com.helpline.helplineapi.enums.ErrorCodeEnum;
 import com.helpline.helplineapi.repositories.DonationRepository;
 import com.helpline.helplineapi.repositories.OngRepository;
@@ -16,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -27,8 +29,6 @@ public class DonationReportService extends BaseService<GetDonationReportRequest,
     @Autowired
     private OngRepository ongRepository;
 
-    @Autowired
-    private DonationRepository donationRepository;
 
     @Override
     protected GetDonationReportResponse processService(GetDonationReportRequest request) {
@@ -36,8 +36,15 @@ public class DonationReportService extends BaseService<GetDonationReportRequest,
 
         var dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-        var donations = donationRepository.findByReceiverIdAndAddedAtBetween(ong.getId(), LocalDateTime.now().minusMonths(1), LocalDateTime.now());
+        var campaigns = ong.getCampaigns();
 
+//        var donations = campaigns
+//                .stream()
+//                .flatMap(campaignEntity -> campaignEntity.getDonations().stream())
+//                .filter(donation -> donation.getType() == CampaignTypeEnum.MONETARY)
+//                .toList();
+
+        var donations = new ArrayList<DonationEntity>();
         String fileName = String.format("DOACOES_%s_%s.csv", LocalDateTime.now().minusMonths(1).format(dateFormat), LocalDateTime.now().format(dateFormat));
 
         String csvString = getCsvString(donations);

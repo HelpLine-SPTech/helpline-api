@@ -5,11 +5,9 @@ import com.helpline.helplineapi.data.contract.dashboard.SummaryGraphicData;
 import com.helpline.helplineapi.data.contract.dashboard.SummaryRequest;
 import com.helpline.helplineapi.data.contract.dashboard.SummaryResponse;
 import com.helpline.helplineapi.entities.donation.DonationEntity;
-import com.helpline.helplineapi.entities.user.BaseUserEntity;
 import com.helpline.helplineapi.entities.user.OngEntity;
+import com.helpline.helplineapi.enums.CampaignTypeEnum;
 import com.helpline.helplineapi.enums.ErrorCodeEnum;
-import com.helpline.helplineapi.repositories.BaseUserRepository;
-import com.helpline.helplineapi.repositories.DonationRepository;
 import com.helpline.helplineapi.repositories.OngRepository;
 import com.helpline.helplineapi.services.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +25,22 @@ public class SummaryService extends BaseService<SummaryRequest, SummaryResponse>
     @Autowired
     private OngRepository ongRepository;
 
-    @Autowired
-    private DonationRepository donationRepository;
-
     private OngEntity ong;
 
     @Override
     protected SummaryResponse processService(SummaryRequest request) {
         var response = new SummaryResponse();
         var jobs = ong.getJobs();
+
+        var startDate = LocalDateTime.of(
+                LocalDate.now().getYear(),
+                LocalDateTime.now().getMonth(),
+                LocalDateTime.now().getDayOfMonth(), 0, 0).minusMonths(1);
+
         var summaryData = new SummaryData();
         summaryData.setCampaigns(jobs.size());
         summaryData.setVolunteers(jobs.stream().mapToLong(x -> x.getVolunteers().size()).sum());
-        summaryData.setDonations(donationRepository.countByReceiverIdAndAddedAtAfter(request.getOngId(), LocalDateTime.of(
-                LocalDate.now().getYear(),
-                LocalDateTime.now().getMonth(),
-                LocalDateTime.now().getDayOfMonth(), 0, 0).minusMonths(1)));
+        summaryData.setDonations(getDonations(startDate, LocalDateTime.now()).size());
 
         summaryData.setGraphicData(getGraphicData(request));
 
@@ -76,7 +74,8 @@ public class SummaryService extends BaseService<SummaryRequest, SummaryResponse>
             var startDate = currentDate;
             var endDate = currentDate.plusDays(1).minusNanos(1);
 
-            var donations = donationRepository.findByReceiverIdAndAddedAtBetween(request.getOngId(), startDate, endDate);
+            var donations = getDonations(startDate, endDate);
+
             var sum = donations.stream().mapToLong(DonationEntity::getAmount).sum();
 
             var dataGroup = new SummaryGraphicData();
@@ -91,5 +90,18 @@ public class SummaryService extends BaseService<SummaryRequest, SummaryResponse>
         Collections.reverse(data);
 
         return data;
+    }
+
+    private List<DonationEntity> getDonations(LocalDateTime startDate, LocalDateTime endDate) {
+        var campaigns = ong.getCampaigns();
+
+        return new ArrayList<>();
+
+//        return campaigns
+//                .stream()
+//                .flatMap(campaignEntity -> campaignEntity.getDonations().stream())
+//                .filter(donation -> donation.getType() == CampaignTypeEnum.MONETARY)
+//                .filter(donation -> donation.getAddedAt().isAfter(startDate) && donation.getAddedAt().isBefore(endDate))
+//                .toList();
     }
 }
