@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import com.helpline.helplineapi.enums.CampaignTypeEnum;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,4 +49,10 @@ public class DonationEntity extends BaseEntity {
     @ManyToOne()
     @JoinColumn(name = "donor_id")
     private UserEntity donor;
+
+    /**
+     * Flag que indica se a ong confirmou ou não a doação
+     */
+    @Column(columnDefinition = "boolean default false")
+    private boolean isConfirmed;
 }

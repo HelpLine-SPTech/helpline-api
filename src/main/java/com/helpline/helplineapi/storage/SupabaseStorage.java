@@ -23,7 +23,7 @@ public class SupabaseStorage {
     private final S3Client s3Client;
 
     /**
-     * The helpline bucket name, stored in application.properties
+     * The helpline bucket name, stored in application.yml
      */
     private final String bucketName;
 

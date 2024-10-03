@@ -21,6 +21,7 @@ public class DonationMapper {
         donation.setQuantity(entity.getQuantity());
         donation.setDonorId(entity.getDonor().getId());
         donation.setCampaignId(entity.getCampaign().getId());
+        donation.setConfirmed(entity.isConfirmed());
 
         return donation;
     }
@@ -40,6 +41,7 @@ public class DonationMapper {
         entity.setType(campaign.getType());
         entity.setQuantity(donation.getQuantity());
         entity.setDonor(donor);
+        entity.setConfirmed(donation.isConfirmed());
 
         return entity;
     }
