@@ -10,6 +10,7 @@ COPY ./src ./src
 RUN mvn clean package -e -DskipTests
 RUN ls
 RUN mv target/*.jar app.jar
+RUN ls
 FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
