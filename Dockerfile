@@ -15,6 +15,6 @@ FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-COPY --from=build /app/target/app.jar .
+COPY --from=build /app/app.jar .
 
 CMD ["java", "-jar", "app.jar"]
