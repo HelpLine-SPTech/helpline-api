@@ -51,6 +51,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/chat").permitAll()
                         .requestMatchers(HttpMethod.GET, "/chat/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/chat/messages/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                   .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
