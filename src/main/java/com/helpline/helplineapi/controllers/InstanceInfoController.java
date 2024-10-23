@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class InstanceInfoController {
 
-    @GetMapping("/get-ip")
-    public String getClientIp(HttpServletRequest request) {
-        String clientIp = request.getHeader("X-Forwarded-For");
-        if (clientIp == null || clientIp.isEmpty()) {
-            clientIp = request.getRemoteAddr(); // Se não estiver atrás de proxy
-        }
-        return "Você fez a requisição com o IP " + clientIp;
-    }
+    @Autowired
+    private Environment environment;
+    @GetMapping("/instance-info")
+    public ResponseEntity<String> getInstanceInfo() {
+        String message = "Respondendo pela instância na porta: " + environment.getProperty("local.server.port");
+        return ResponseEntity.ok(message);
 
 }
 
