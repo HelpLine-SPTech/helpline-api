@@ -14,11 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class InstanceInfoController {
 
     @GetMapping("/proxy-info")
-    public String getProxyInfo(HttpServletRequest request) {
-        String forwardedFor = request.getHeader("X-Forwarded-For"); // IP original pelo proxy
-        String clientIp = (forwardedFor != null) ? forwardedFor : request.getRemoteAddr();
-        int clientPort = request.getRemotePort();
-        return "Client IP: " + clientIp + ", Client Port: " + clientPort;
+public String getProxyInfo(HttpServletRequest request) {
+        String clientIp = request.getRemoteAddr(); // IP do cliente
+        int clientPort = request.getRemotePort();  // Porta do cliente
+
+        // Captura a porta local que o container está usando (ex: 8080 ou 8081)
+        int localPort = request.getLocalPort();  
+
+        return "Client IP: " + clientIp + 
+               ", Client Port: " + clientPort + 
+               ", Local Port (Container): " + localPort;
     }
 }
 
