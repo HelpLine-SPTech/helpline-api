@@ -19,6 +19,6 @@ public class InstanceInfoController {
     public ResponseEntity<String> getInstanceInfo() {
         String message = "Respondendo pela instância na porta: " + environment.getProperty("local.server.port");
         return ResponseEntity.ok(message);
-
+    }
 }
 
