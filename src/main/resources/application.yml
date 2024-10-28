@@ -6,8 +6,6 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
-        show-sql: true
-
 aws:
     s3:
         bucket-name: ${SUPABASE_BUCKET_NAME:helpline-storage}
