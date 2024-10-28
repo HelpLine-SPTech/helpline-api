@@ -1,6 +1,6 @@
 spring:
     datasource:
-        url: jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:5432/postgres?user=backendapi.nmcgdztcymerhtkgdots&password=aditum123
+        url: jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres?user=backendapi.nmcgdztcymerhtkgdots&password=aditum123
         driver-class-name: org.postgresql.Driver
     jpa:
         properties:
