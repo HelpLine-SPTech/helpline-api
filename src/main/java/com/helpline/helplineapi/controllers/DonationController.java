@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/donations")
+@RequestMapping("/api/donations")
 @SecurityRequirement(name = "helpline-api")
 public class DonationController {
 

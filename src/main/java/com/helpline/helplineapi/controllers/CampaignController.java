@@ -24,7 +24,7 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/campaigns")
+@RequestMapping("/api/campaigns")
 @SecurityRequirement(name = "helpline-api")
 public class CampaignController {
 
