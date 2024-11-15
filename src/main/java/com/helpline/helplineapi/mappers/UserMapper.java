@@ -25,6 +25,7 @@ public abstract class UserMapper {
             dto.setType("UserEntity");
             dto.setAbilities(((UserEntity) self).getAbilities());
         } else {
+            dto.setCampaigns(CampaignMapper.toContract(((OngEntity)self).getCampaigns().stream().toList()));
             dto.setType("OngEntity");
         }
 

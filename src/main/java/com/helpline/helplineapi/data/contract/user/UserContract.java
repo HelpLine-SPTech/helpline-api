@@ -1,6 +1,7 @@
 package com.helpline.helplineapi.data.contract.user;
 
 import com.helpline.helplineapi.data.contract.address.AddressContract;
+import com.helpline.helplineapi.data.contract.campaign.CampaignContract;
 import com.helpline.helplineapi.enums.UserTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,4 +32,6 @@ public class UserContract {
     private String type;
 
     private List<String> abilities;
+
+    private List<CampaignContract> campaigns;
 }
