@@ -29,7 +29,7 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController()
-@RequestMapping("auth")
+@RequestMapping("/api/auth")
 @SecurityRequirement(name = "helpline-api")
 public class UserController {
 

@@ -25,7 +25,7 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/posts")
+@RequestMapping("/api/posts")
 @SecurityRequirement(name = "helpline-api")
 public class PostController {
     @Autowired

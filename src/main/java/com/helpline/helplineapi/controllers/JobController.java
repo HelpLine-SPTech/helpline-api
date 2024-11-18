@@ -23,7 +23,7 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/jobs")
+@RequestMapping("/api/jobs")
 @SecurityRequirement(name = "helpline-api")
 public class JobController {
     private final CreateJobService createJobService;

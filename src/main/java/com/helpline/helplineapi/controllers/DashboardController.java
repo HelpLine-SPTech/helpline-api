@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/dashboard")
+@RequestMapping("/api/dashboard")
 @SecurityRequirement(name = "helpline-api")
 public class DashboardController {
 

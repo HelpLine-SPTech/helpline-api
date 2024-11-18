@@ -26,7 +26,7 @@ public class ChatController {
   private final GetOngVolunteersService getOngVolunteersService;
   private final GetVolunteerOngsService getVolunteerOngsService;
 
-  @MessageMapping("/chat")
+  @MessageMapping("/api/chat")
   public void processMessage(@Payload ChatMessage chatMessage){
     ChatMessage savedMsg = chatMsgService.save(chatMessage);
     messagingTemplate.convertAndSendToUser(
@@ -40,20 +40,20 @@ public class ChatController {
     );
   }
 
-  @GetMapping("/messages/{senderId}/{recipientId}")
+  @GetMapping("/api/messages/{senderId}/{recipientId}")
   public ResponseEntity<List<ChatMessage>> findChatMessages(@PathVariable String senderId, @PathVariable String recipientId){
 
     return ResponseEntity.status(200).body(chatMsgService.findChatMessages(senderId, recipientId));
   }
 
-  @GetMapping("/users")
+  @GetMapping("/api/users")
   public ResponseEntity<GetChatUsersResponse> getOngVolunteers(@RequestAttribute("RequesterUser") BaseUserEntity requesterUser) {
     var request = new GetChatUsersRequest();
     request.setUserId(requesterUser.getId());
     return getOngVolunteersService.process(request);
   }
 
-  @GetMapping("/ongs")
+  @GetMapping("/api/ongs")
   public ResponseEntity<GetChatUsersResponse> getVolunteerOngs(@RequestAttribute("RequesterUser") BaseUserEntity requesterUser) {
     var request = new GetChatUsersRequest();
     request.setUserId(requesterUser.getId());
