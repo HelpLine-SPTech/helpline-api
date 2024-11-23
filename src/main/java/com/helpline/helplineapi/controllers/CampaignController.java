@@ -57,12 +57,12 @@ public class CampaignController {
 
     @GetMapping
     public ResponseEntity<ListCampaignResponse> listJobs(
+            @RequestParam(defaultValue = "") UUID ongId,
             @RequestParam(defaultValue = "addedAt") String sort,
             @RequestParam(defaultValue = "asc") String order,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
-            @RequestParam(defaultValue = "") String desc,
-            @RequestAttribute("RequesterUser") BaseUserEntity requesterUser){
+            @RequestParam(defaultValue = "") String desc){
 
         var request = new ListCampaignRequest();
         request.setSort(sort);
@@ -70,7 +70,7 @@ public class CampaignController {
         request.setPage(page);
         request.setSize(size);
         request.setDesc(desc);
-        request.setOngId(requesterUser.getId());
+        request.setOngId(ongId);
 
         return listCampaignService.process(request);
     }

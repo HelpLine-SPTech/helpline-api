@@ -96,7 +96,7 @@ public class CreatePostService extends BaseService<CreatePostRequest, CreatePost
             String filePath = String.format("post/%s/%s", postId, image.getOriginalFilename());
             storage.uploadFile(filePath, image);
             return getFileUrl(postId, image.getOriginalFilename());
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             response.addError(ErrorCodeEnum.UNEXPECTED_ERROR);
             return "";
         }
