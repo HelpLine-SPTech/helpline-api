@@ -9,5 +9,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CampaignRepository extends JpaRepository<CampaignEntity, UUID> {
-    Page<CampaignEntity> findAllByOngId(UUID ongId, Pageable pageable);
+    Page<CampaignEntity> findAll(Pageable pageable);
 }

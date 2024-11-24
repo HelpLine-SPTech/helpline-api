@@ -24,8 +24,8 @@ public class ListCampaignService extends BaseService<ListCampaignRequest, ListCa
     @Override
     protected ListCampaignResponse processService(ListCampaignRequest request) {
         Sort.Direction direction = request.getOrder().equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Pageable pageable = PageRequest.of(request.getPage() - 1, request.getSize(), Sort.by(direction, request.getSort()));
-        Page<CampaignEntity> campaignEntities = repository.findAllByOngId(request.getOngId(), pageable);
+        Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), Sort.by(direction, request.getSort()));
+        Page<CampaignEntity> campaignEntities = repository.findAll(pageable);
 
 
         List<CampaignContract> campaignContracts = CampaignMapper.toContract(campaignEntities.getContent());
@@ -34,6 +34,13 @@ public class ListCampaignService extends BaseService<ListCampaignRequest, ListCa
                     .stream()
                     .filter(j -> j.getDescription().toLowerCase().contains(request.getDesc().toLowerCase()) || j.getTitle().toLowerCase().contains(request.getDesc().toLowerCase()))
                     .toList();
+        }
+
+        if(request.getOngId() != null) {
+           campaignContracts = campaignContracts
+                   .stream()
+                   .filter(j -> j.getOngId().equals(request.getOngId()))
+                   .toList();
         }
 
         var response = new ListCampaignResponse();
