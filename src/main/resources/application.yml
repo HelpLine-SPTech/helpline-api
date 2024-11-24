@@ -6,6 +6,11 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
+    servlet:
+        multipart:
+            max-file-size: -1
+            max-request-size: -1
+            enabled: true
 aws:
     s3:
         bucket-name: ${SUPABASE_BUCKET_NAME:helpline-storage}
