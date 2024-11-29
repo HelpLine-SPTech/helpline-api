@@ -94,11 +94,21 @@ public class ConfirmDonationService extends BaseService<ConfirmDonationRequest, 
     private void existingBadgeFlow(BadgeEntity badge) {
         var allDonorDonations = donationRepository.findByDonorId(donationEntity.getDonor().getId());
 
-        int newTotalAmount = allDonorDonations
-                .stream()
-                .filter(d -> d.getType() == donationEntity.getType())
-                .mapToInt(DonationEntity::getQuantity)
-                .sum();
+        int newTotalAmount;
+
+        if(badge.getType() == BadgeTypeEnum.MONETARY) {
+            newTotalAmount = (int) allDonorDonations
+                    .stream()
+                    .filter(d -> d.getType() == donationEntity.getType())
+                    .mapToLong(DonationEntity::getAmount)
+                    .sum();
+        } else {
+            newTotalAmount = allDonorDonations
+                    .stream()
+                    .filter(d -> d.getType() == donationEntity.getType())
+                    .mapToInt(DonationEntity::getQuantity)
+                    .sum();
+        }
 
         badge.setLevel(BadgeMapper.getNextLevel(newTotalAmount, badge.getType()));
         badgeRepository.save(badge);

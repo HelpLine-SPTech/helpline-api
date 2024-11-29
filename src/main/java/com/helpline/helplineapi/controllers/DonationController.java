@@ -1,10 +1,15 @@
 package com.helpline.helplineapi.controllers;
 
+import com.helpline.helplineapi.data.contract.donations.DonationContract;
 import com.helpline.helplineapi.data.contract.donations.confirm.ConfirmDonationRequest;
 import com.helpline.helplineapi.data.contract.donations.confirm.ConfirmDonationResponse;
+import com.helpline.helplineapi.data.contract.donations.create.CreateDonationRequest;
+import com.helpline.helplineapi.data.contract.donations.create.CreateDonationResponse;
 import com.helpline.helplineapi.data.contract.donations.report.GetDonationReportRequest;
 import com.helpline.helplineapi.entities.user.BaseUserEntity;
+import com.helpline.helplineapi.entities.user.UserEntity;
 import com.helpline.helplineapi.services.donation.ConfirmDonationService;
+import com.helpline.helplineapi.services.donation.CreateDonationService;
 import com.helpline.helplineapi.services.donation.DonationReportService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +33,18 @@ public class DonationController {
 
     @Autowired
     private ConfirmDonationService confirmDonationService;
+
+    @Autowired
+    private CreateDonationService createDonationService;
+
+    @PostMapping
+    public ResponseEntity<CreateDonationResponse> createDonation(@RequestAttribute("RequesterUser")BaseUserEntity requester, @RequestBody DonationContract donation) {
+        var request = new CreateDonationRequest();
+        request.setDonation(donation);
+        request.setDonor((UserEntity) requester);
+
+        return createDonationService.process(request);
+    }
 
     @GetMapping("/report")
     public ResponseEntity<FileSystemResource> donationsReport(@RequestAttribute("RequesterUser")BaseUserEntity requester) {
