@@ -3,6 +3,8 @@ spring:
         url: jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:5432/postgres?user=postgres.nmcgdztcymerhtkgdots&password=XdF37GAA4P8seyyM
         driver-class-name: org.postgresql.Driver
     jpa:
+        hibernate:
+            ddl-auto: update
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect

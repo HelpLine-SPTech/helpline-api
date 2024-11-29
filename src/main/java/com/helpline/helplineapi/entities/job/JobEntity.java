@@ -61,6 +61,6 @@ public class JobEntity extends BaseEntity {
     @OneToMany(mappedBy = "job", cascade = CascadeType.PERSIST)
     private List<SubscriptionEntity> volunteers;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private OngEntity ong;
 }

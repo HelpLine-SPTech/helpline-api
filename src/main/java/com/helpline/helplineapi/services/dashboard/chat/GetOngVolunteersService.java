@@ -26,9 +26,9 @@ public class GetOngVolunteersService extends BaseService<GetChatUsersRequest, Ge
 
     var jobs = jobRepository.findAllByOngId(request.getUserId());
     jobs.forEach(job -> {
-      subscriptionEntityList.addAll(job.getVolunteers());
-    });
-    subscriptionEntityList.forEach(subscriptionEntity -> {
+        subscriptionEntityList.addAll(job.getVolunteers());
+      });
+      subscriptionEntityList.forEach(subscriptionEntity -> {
       users.add(UserMapper.toUserResult(subscriptionEntity.getVolunteer()));
     });
     response.setUsers(users);
