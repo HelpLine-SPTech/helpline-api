@@ -7,6 +7,7 @@ import com.helpline.helplineapi.entities.user.OngEntity;
 import com.helpline.helplineapi.entities.user.UserEntity;
 import com.helpline.helplineapi.enums.ErrorCodeEnum;
 import com.helpline.helplineapi.enums.UserTypeEnum;
+import com.helpline.helplineapi.mappers.PixInformationMapper;
 import com.helpline.helplineapi.repositories.BaseUserRepository;
 import com.helpline.helplineapi.repositories.OngRepository;
 import com.helpline.helplineapi.repositories.UserRepository;
@@ -48,6 +49,12 @@ public class RegisterUserService extends BaseService<RegisterRequest, RegisterRe
             return response;
         }
 
+        if(request.getType() == UserTypeEnum.ONG &&
+            request.getPixInfo().getKey().isBlank() || request.getPixInfo().getType() == null) {
+            response.addError(ErrorCodeEnum.INVALID_PROPERTY);
+            return response;
+        }
+
         return response;
     }
 
@@ -59,6 +66,7 @@ public class RegisterUserService extends BaseService<RegisterRequest, RegisterRe
         ong.setName(request.getName());
         ong.setDocument(request.getDocument());
         ong.setRole(request.getRole());
+        ong.setPixInfo(PixInformationMapper.toEntity(request.getPixInfo()));
 
         ongRepository.save(ong);
 
