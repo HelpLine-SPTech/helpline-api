@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface DonationRepository extends JpaRepository<DonationEntity, UUID> {
     List<DonationEntity> findByDonorId(UUID donorId);
+
+    List<DonationEntity> findByCampaignId(UUID campaignId);
 }

@@ -8,6 +8,7 @@ import com.helpline.helplineapi.entities.donation.DonationEntity;
 import com.helpline.helplineapi.entities.user.OngEntity;
 import com.helpline.helplineapi.enums.CampaignTypeEnum;
 import com.helpline.helplineapi.enums.ErrorCodeEnum;
+import com.helpline.helplineapi.repositories.DonationRepository;
 import com.helpline.helplineapi.repositories.OngRepository;
 import com.helpline.helplineapi.services.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class SummaryService extends BaseService<SummaryRequest, SummaryResponse>
 
     @Autowired
     private OngRepository ongRepository;
+
+    @Autowired
+    private DonationRepository donationRepository;
 
     private OngEntity ong;
 
@@ -95,13 +99,16 @@ public class SummaryService extends BaseService<SummaryRequest, SummaryResponse>
     private List<DonationEntity> getDonations(LocalDateTime startDate, LocalDateTime endDate) {
         var campaigns = ong.getCampaigns();
 
-        return new ArrayList<>();
+        List<DonationEntity> donations = new ArrayList<>();
 
-//        return campaigns
-//                .stream()
-//                .flatMap(campaignEntity -> campaignEntity.getDonations().stream())
-//                .filter(donation -> donation.getType() == CampaignTypeEnum.MONETARY)
-//                .filter(donation -> donation.getAddedAt().isAfter(startDate) && donation.getAddedAt().isBefore(endDate))
-//                .toList();
+        campaigns.forEach(c -> {
+            donations.addAll(donationRepository.findByCampaignId(c.getId()));
+        });
+
+        return donations
+                .stream()
+                .filter(donation -> donation.getType() == CampaignTypeEnum.MONETARY)
+                .filter(donation -> donation.getAddedAt().isAfter(startDate) && donation.getAddedAt().isBefore(endDate))
+                .toList();
     }
 }

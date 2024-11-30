@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,7 +30,7 @@ public class CampaignEntity extends BaseEntity {
     private String description;
 
     @OneToMany()
-    private List<DonationEntity> donations;
+    private Set<DonationEntity> donations;
 
     @Enumerated(EnumType.STRING)
     private CampaignTypeEnum type;
