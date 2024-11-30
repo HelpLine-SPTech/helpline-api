@@ -24,8 +24,9 @@ public abstract class UserMapper {
         if(self instanceof UserEntity) {
             dto.setType("UserEntity");
             dto.setAbilities(((UserEntity) self).getAbilities());
-        } else {
+        } else if (self instanceof OngEntity) {
             dto.setCampaigns(CampaignMapper.toContract(((OngEntity)self).getCampaigns().stream().toList()));
+            dto.setPixInfo(PixInformationMapper.toContract(((OngEntity) self).getPixInfo()));
             dto.setType("OngEntity");
         }
 

@@ -26,7 +26,7 @@ public class ChatController {
   private final GetOngVolunteersService getOngVolunteersService;
   private final GetVolunteerOngsService getVolunteerOngsService;
 
-  @MessageMapping("/api/chat")
+  @MessageMapping("/chat")
   public void processMessage(@Payload ChatMessage chatMessage){
     ChatMessage savedMsg = chatMsgService.save(chatMessage);
     messagingTemplate.convertAndSendToUser(

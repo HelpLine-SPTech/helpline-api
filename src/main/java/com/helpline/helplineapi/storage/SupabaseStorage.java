@@ -39,7 +39,7 @@ public class SupabaseStorage {
      * Uploads a file to the helpline-bucket
      * @param key the file path
      * @param file the file
-     * @return true if uploaded successfully
+     * @return the file url
      */
     public String uploadFile(String key, MultipartFile file) throws IOException {
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
@@ -55,6 +55,27 @@ public class SupabaseStorage {
             } else {
                 throw new IOException("Failed to upload file to S3");
             }
+        }
+    }
+
+    /**
+     * Uploads a file to the helpline-bucket
+     * @param key the file path
+     * @param file the file
+     * @return the file url
+     */
+    public String uploadFile(String key, byte[] file) throws  IOException {
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(key)
+                .build();
+
+        PutObjectResponse response = s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file));
+
+        if (response.sdkHttpResponse().isSuccessful()) {
+            return s3Client.utilities().getUrl(builder -> builder.bucket(bucketName).key(key)).toExternalForm();
+        } else {
+            throw new IOException("Failed to upload file to S3");
         }
     }
 

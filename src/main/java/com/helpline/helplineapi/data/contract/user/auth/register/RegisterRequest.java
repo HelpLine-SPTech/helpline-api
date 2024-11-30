@@ -1,6 +1,7 @@
 package com.helpline.helplineapi.data.contract.user.auth.register;
 
 import com.helpline.helplineapi.data.contract.address.AddressContract;
+import com.helpline.helplineapi.data.contract.pix.PixInformationContract;
 import com.helpline.helplineapi.enums.UserRole;
 import com.helpline.helplineapi.enums.UserTypeEnum;
 import jakarta.validation.constraints.NotBlank;
@@ -31,4 +32,6 @@ public class RegisterRequest {
     private AddressContract address;
 
     private List<String> abilities;
+
+    private PixInformationContract pixInfo;
 }
