@@ -5,6 +5,10 @@ import com.helpline.helplineapi.entities.pix.PixInformation;
 
 public class PixInformationMapper {
     public static PixInformationContract toContract(PixInformation self) {
+        if(self == null){
+            return null;
+        }
+
         var dto = new PixInformationContract();
         dto.setKey(self.getKey());
         dto.setType(self.getType());
