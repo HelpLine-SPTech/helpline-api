@@ -15,5 +15,7 @@ public interface JobRepository extends JpaRepository<JobEntity, UUID> {
 
     List<JobEntity> findAllByOngId(UUID ongId);
 
+    Page<JobEntity> findAll(Pageable pageable);
+
     void deleteById(UUID id);
 }

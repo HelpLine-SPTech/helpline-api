@@ -69,7 +69,7 @@ public class JobController {
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(defaultValue = "") String desc,
-            @RequestAttribute("RequesterUser") BaseUserEntity requesterUser){
+            @RequestParam(required = false) UUID ongId){
 
         ListJobRequest request = new ListJobRequest();
         request.setSort(sort);
@@ -77,7 +77,7 @@ public class JobController {
         request.setPage(page);
         request.setSize(size);
         request.setDesc(desc);
-        request.setOngId(requesterUser.getId());
+        request.setOngId(ongId);
 
         return listJobService.process(request);
     }
