@@ -66,7 +66,6 @@ public class RegisterUserService extends BaseService<RegisterRequest, RegisterRe
         ong.setName(request.getName());
         ong.setDocument(request.getDocument());
         ong.setRole(request.getRole());
-        ong.setPixInfo(PixInformationMapper.toEntity(request.getPixInfo()));
 
         ongRepository.save(ong);
 

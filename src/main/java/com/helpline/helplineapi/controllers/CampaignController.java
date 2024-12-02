@@ -11,8 +11,6 @@ import com.helpline.helplineapi.data.contract.campaign.get.list.ListCampaignRequ
 import com.helpline.helplineapi.data.contract.campaign.get.list.ListCampaignResponse;
 import com.helpline.helplineapi.data.contract.campaign.update.UpdateCampaignRequest;
 import com.helpline.helplineapi.data.contract.campaign.update.UpdateCampaignResponse;
-import com.helpline.helplineapi.data.contract.job.list.ListJobRequest;
-import com.helpline.helplineapi.data.contract.job.list.ListJobResponse;
 import com.helpline.helplineapi.entities.user.BaseUserEntity;
 import com.helpline.helplineapi.services.campaign.*;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -56,11 +54,11 @@ public class CampaignController {
     }
 
     @GetMapping
-    public ResponseEntity<ListCampaignResponse> listJobs(
+    public ResponseEntity<ListCampaignResponse> listCampaigns(
             @RequestParam(defaultValue = "") UUID ongId,
             @RequestParam(defaultValue = "addedAt") String sort,
             @RequestParam(defaultValue = "asc") String order,
-            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(defaultValue = "") String desc){
 
