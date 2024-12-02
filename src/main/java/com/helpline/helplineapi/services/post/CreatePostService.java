@@ -50,8 +50,10 @@ public class CreatePostService extends BaseService<CreatePostRequest, CreatePost
         entity.setUser(user);
 
         var savedPost = postRepository.save(entity);
-        var imagesEntities = this.uploadImages(request.getImages(), savedPost.getId(), response);
-        savedPost.setImages(imagesEntities);
+        if (request.getImages() != null) {
+            var imagesEntities = this.uploadImages(request.getImages(), savedPost.getId(), response);
+            savedPost.setImages(imagesEntities);
+        }
         savedPost = postRepository.save(savedPost);
         if(!response.getSuccess()) return response;
 
