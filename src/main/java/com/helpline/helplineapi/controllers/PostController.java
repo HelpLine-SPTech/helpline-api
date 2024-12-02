@@ -47,7 +47,7 @@ public class PostController {
     private ResponseEntity<CreatePostResponse> create(
             @RequestAttribute("RequesterUser") BaseUserEntity requester,
             @RequestParam("content") String content,
-            @RequestParam("images") List<MultipartFile> images) {
+            @RequestParam(name = "images", required = false) List<MultipartFile> images) {
         var request = new CreatePostRequest();
         request.setContent(content);
         request.setImages(images);
