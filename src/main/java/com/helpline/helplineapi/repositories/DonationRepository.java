@@ -4,10 +4,11 @@ import com.helpline.helplineapi.entities.donation.DonationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface DonationRepository extends JpaRepository<DonationEntity, UUID> {
     List<DonationEntity> findByDonorId(UUID donorId);
 
-    List<DonationEntity> findByCampaignId(UUID campaignId);
+    Set<DonationEntity> findByCampaignId(UUID campaignId);
 }

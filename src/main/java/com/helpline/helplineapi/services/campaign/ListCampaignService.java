@@ -6,7 +6,9 @@ import com.helpline.helplineapi.data.contract.campaign.get.list.ListCampaignRequ
 import com.helpline.helplineapi.data.contract.campaign.get.list.ListCampaignResponse;
 import com.helpline.helplineapi.entities.campaign.CampaignEntity;
 import com.helpline.helplineapi.mappers.CampaignMapper;
+import com.helpline.helplineapi.mappers.DonationMapper;
 import com.helpline.helplineapi.repositories.CampaignRepository;
+import com.helpline.helplineapi.repositories.DonationRepository;
 import com.helpline.helplineapi.services.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,12 +23,14 @@ public class ListCampaignService extends BaseService<ListCampaignRequest, ListCa
     @Autowired
     private CampaignRepository repository;
 
+    @Autowired
+    private DonationRepository donationRepository;
+
     @Override
     protected ListCampaignResponse processService(ListCampaignRequest request) {
         Sort.Direction direction = request.getOrder().equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), Sort.by(direction, request.getSort()));
+        Pageable pageable = PageRequest.of(request.getPage() - 1, request.getSize(), Sort.by(direction, request.getSort()));
         Page<CampaignEntity> campaignEntities = repository.findAll(pageable);
-
 
         List<CampaignContract> campaignContracts = CampaignMapper.toContract(campaignEntities.getContent());
         if(!request.getDesc().isEmpty()) {
@@ -43,6 +47,13 @@ public class ListCampaignService extends BaseService<ListCampaignRequest, ListCa
                    .toList();
         }
 
+        campaignContracts
+                .stream()
+                .forEach(c -> {
+                    var donations = donationRepository.findByCampaignId(c.getId());
+                    var mapped = DonationMapper.toContract(donations.stream().toList());
+                    c.setDonations(mapped);
+                });
         var response = new ListCampaignResponse();
         response.setCampaigns(campaignContracts);
         response.setTotalPages(campaignEntities.getTotalPages());
